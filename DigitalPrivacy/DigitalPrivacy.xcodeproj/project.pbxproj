@@ -29,9 +29,23 @@
 		53D6AAAE2CC80EAE007D79FB /* DigitalPrivacyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DigitalPrivacyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		53D6ABAB2CC81683007D79FB /* Exceptions for "DigitalPrivacy" folder in "DigitalPrivacy" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"DM_Sans,Public_Sans/DM_Sans/OFL.txt",
+				"DM_Sans,Public_Sans/DM_Sans/README.txt",
+			);
+			target = 53D6AA932CC80EAB007D79FB /* DigitalPrivacy */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		53D6AA962CC80EAB007D79FB /* DigitalPrivacy */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				53D6ABAB2CC81683007D79FB /* Exceptions for "DigitalPrivacy" folder in "DigitalPrivacy" target */,
+			);
 			path = DigitalPrivacy;
 			sourceTree = "<group>";
 		};
