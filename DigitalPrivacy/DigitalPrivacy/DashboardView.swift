@@ -21,7 +21,27 @@ struct DashboardView: View {
                 List {
                     // Social media accounts section with custom logos and increased spacing
                     Section(header: Text("My Accounts").font(.custom("DMSans-Bold", size: 22))) {
-                        ForEach(accounts, id: \.name) { account in
+                        
+                        // Add a NavigationLink for Instagram
+                        NavigationLink(destination: InstagramDetailView()) {
+                            HStack {
+                                Image("instagram") // Use the custom image from Assets
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50) // Increased size of the logos
+                                    .clipShape(Circle()) // Clip image to a circle
+                                Text("Instagram")
+                                    .font(.custom("DMSans-Regular", size: 18))
+                                Spacer()
+                                //Image(systemName: "chevron.right")  // Arrow indicator
+                                    .foregroundColor(.gray)
+                            }
+                            .padding(.vertical, 12) // Increased vertical padding for more spacing
+                            .background(Color.white)  // Ensure row background is white
+                        }
+
+                        // For the rest of the accounts (Facebook, Snapchat, Twitter)
+                        ForEach(accounts.filter { $0.name != "Instagram" }, id: \.name) { account in
                             HStack {
                                 Image(account.imageName) // Use the custom image from Assets
                                     .resizable()
