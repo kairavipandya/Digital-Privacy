@@ -33,8 +33,7 @@ struct DashboardView: View {
                                 Text("Instagram")
                                     .font(.custom("DMSans-Regular", size: 18))
                                 Spacer()
-                                //Image(systemName: "chevron.right")  // Arrow indicator
-                                    .foregroundColor(.gray)
+                                // Removed the extra arrow here
                             }
                             .padding(.vertical, 12) // Increased vertical padding for more spacing
                             .background(Color.white)  // Ensure row background is white
