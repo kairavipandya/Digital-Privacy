@@ -35,6 +35,7 @@
 			membershipExceptions = (
 				"DM_Sans,Public_Sans/DM_Sans/OFL.txt",
 				"DM_Sans,Public_Sans/DM_Sans/README.txt",
+				Untitled.swift,
 			);
 			target = 53D6AA932CC80EAB007D79FB /* DigitalPrivacy */;
 		};
