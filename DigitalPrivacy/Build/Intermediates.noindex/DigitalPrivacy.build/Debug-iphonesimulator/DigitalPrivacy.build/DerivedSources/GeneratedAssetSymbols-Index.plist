@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>colors</key>
+	<array/>
+	<key>images</key>
+	<array>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/arjunprabhune/Desktop/Classes/HCI/Digital-Privacy/DigitalPrivacy/DigitalPrivacy/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameFacebook</string>
+			<key>relativePath</key>
+			<string>./facebook.imageset</string>
+			<key>swiftSymbol</key>
+			<string>facebook</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/arjunprabhune/Desktop/Classes/HCI/Digital-Privacy/DigitalPrivacy/DigitalPrivacy/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameInstagram</string>
+			<key>relativePath</key>
+			<string>./instagram.imageset</string>
+			<key>swiftSymbol</key>
+			<string>instagram</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/arjunprabhune/Desktop/Classes/HCI/Digital-Privacy/DigitalPrivacy/DigitalPrivacy/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSnapchat</string>
+			<key>relativePath</key>
+			<string>./snapchat.imageset</string>
+			<key>swiftSymbol</key>
+			<string>snapchat</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/arjunprabhune/Desktop/Classes/HCI/Digital-Privacy/DigitalPrivacy/DigitalPrivacy/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameTwitter</string>
+			<key>relativePath</key>
+			<string>./twitter.imageset</string>
+			<key>swiftSymbol</key>
+			<string>twitter</string>
+		</dict>
+	</array>
+	<key>symbols</key>
+	<array/>
+</dict>
+</plist>

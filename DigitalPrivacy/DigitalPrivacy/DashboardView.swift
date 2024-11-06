@@ -61,24 +61,26 @@ struct DashboardView: View {
 
                     // Custom Privacy Rules section with arrow
                     Section {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("Custom Privacy Rules")
-                                    .font(.custom("DMSans-Bold", size: 18))
-                                    .foregroundColor(.black)
-                                Text("Apply to Multiple Accounts")
-                                    .font(.custom("DMSans-Regular", size: 16))
-                                    .foregroundColor(.gray)
+                        NavigationLink(destination: CustomPrivacyRulesView()) {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text("Custom Privacy Rules")
+                                        .font(.custom("DMSans-Bold", size: 18))
+                                        .foregroundColor(.black)
+                                    Text("Apply to Multiple Accounts")
+                                        .font(.custom("DMSans-Regular", size: 16))
+                                        .foregroundColor(.gray)
+                                }
+                                Spacer()
+                                
                             }
-                            Spacer()
-                            Image(systemName: "chevron.right")  // Arrow indicating more details
-                                .foregroundColor(.gray)
+                            .padding(.vertical, 8) // Ensure spacing between header and subheader
+                            .background(Color.white) // Background color for the entire block
                         }
-                        .padding(.vertical, 8) // Ensure spacing between header and subheader
-                        .background(Color.white) // Background color for the entire block
                     }
                     .textCase(nil)  // Preserve original text case for headers
-                    .listRowSeparator(.visible)  // Ensure separator is visible between sections
+                    .listRowSeparator(.visible)
+
 
                     // Manage Privacy Profiles section with arrow
                     Section {

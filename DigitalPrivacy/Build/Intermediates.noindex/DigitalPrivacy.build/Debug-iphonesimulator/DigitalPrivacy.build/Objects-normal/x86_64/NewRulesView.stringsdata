@@ -1,0 +1,136 @@
+{
+  "source": "/Users/arjunprabhune/Desktop/Classes/HCI/Digital-Privacy/DigitalPrivacy/DigitalPrivacy/NewRulesView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Create New Rule",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 109
+        }
+      },
+      {
+        "comment": "",
+        "key": "Create New Rule",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "Select Rule Type",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "Location",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "Profile Visibility",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Comment Permissions",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Set Rule",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allow All",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "Friends Only",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "No One",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "Select Profiles",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "Instagram",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "Snapchat",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 76
+        }
+      },
+      {
+        "comment": "",
+        "key": "Facebook",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "Twitter",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "APPLY RULE",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 98
+        }
+      }
+    ]
+  },
+  "version": 1
+}

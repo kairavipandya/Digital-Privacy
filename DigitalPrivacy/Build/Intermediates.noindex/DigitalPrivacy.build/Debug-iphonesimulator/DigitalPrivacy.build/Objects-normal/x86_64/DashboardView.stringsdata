@@ -1,0 +1,120 @@
+{
+  "source": "/Users/arjunprabhune/Desktop/Classes/HCI/Digital-Privacy/DigitalPrivacy/DigitalPrivacy/DashboardView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "SafeSphere",
+        "location": {
+          "startingColumn": 78,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "My Accounts",
+        "location": {
+          "startingColumn": 82,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "Instagram",
+        "location": {
+          "startingColumn": 78,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Custom Privacy Rules",
+        "location": {
+          "startingColumn": 83,
+          "startingLine": 73
+        }
+      },
+      {
+        "comment": "",
+        "key": "Apply to Multiple Accounts",
+        "location": {
+          "startingColumn": 83,
+          "startingLine": 76
+        }
+      },
+      {
+        "comment": "",
+        "key": "Manage Privacy Profiles",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "School vs Personal",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "Home",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 118
+        }
+      },
+      {
+        "comment": "",
+        "key": "Settings View",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 122
+        }
+      },
+      {
+        "comment": "",
+        "key": "Settings",
+        "location": {
+          "startingColumn": 82,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "Settings",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 127
+        }
+      },
+      {
+        "comment": "",
+        "key": "Profile View",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 131
+        }
+      },
+      {
+        "comment": "",
+        "key": "Profile",
+        "location": {
+          "startingColumn": 82,
+          "startingLine": 132
+        }
+      },
+      {
+        "comment": "",
+        "key": "Profile",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 136
+        }
+      }
+    ]
+  },
+  "version": 1
+}
