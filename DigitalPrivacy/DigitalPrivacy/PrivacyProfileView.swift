@@ -1,6 +1,18 @@
 import SwiftUI
 
+// Data model for storing profile information
+struct PrivacyProfile: Identifiable {
+    let id = UUID()
+    let name: String
+    let profiles: Set<String>
+    let rules: Set<String>
+    let startTime: String
+    let endTime: String
+}
+
 struct PrivacyProfilesView: View {
+    @State private var profiles: [PrivacyProfile] = []
+
     var body: some View {
         NavigationView {
             VStack {
@@ -9,8 +21,7 @@ struct PrivacyProfilesView: View {
                         .font(.custom("DMSans-Bold", size: 24))
                         .padding(.top, 16)
                     Spacer()
-                    // NavigationLink for the "+" button to navigate to CreatePrivacyProfileView
-                    NavigationLink(destination: CreatePrivacyProfileView()) {
+                    NavigationLink(destination: CreatePrivacyProfileView(profiles: $profiles)) {
                         Image(systemName: "plus")
                             .foregroundColor(.black)
                     }
@@ -19,46 +30,27 @@ struct PrivacyProfilesView: View {
                 .padding(.horizontal)
 
                 List {
-                    NavigationLink(destination: Text("Personal Profile Settings")) {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("Personal Profile")
+                    ForEach(profiles) { profile in
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text(profile.name)
                                     .font(.custom("DMSans-Bold", size: 18))
-                                    .foregroundColor(.black)
-                                Text("Configure privacy settings for personal time")
-                                    .font(.custom("DMSans-Regular", size: 16))
+                                Spacer()
+                                Image(systemName: "chevron.right")
                                     .foregroundColor(.gray)
                             }
-                            Spacer()
-                            Image(systemName: "chevron.right")
+                            Text("Profiles: \(profile.profiles.joined(separator: ", "))")
+                                .font(.custom("DMSans-Regular", size: 16))
+                                .foregroundColor(.gray)
+                            Text("Rules: \(profile.rules.joined(separator: ", "))")
+                                .font(.custom("DMSans-Regular", size: 16))
+                                .foregroundColor(.gray)
+                            Text("Activation Time: \(profile.startTime) - \(profile.endTime)")
+                                .font(.custom("DMSans-Regular", size: 16))
                                 .foregroundColor(.gray)
                         }
                         .padding(.vertical, 8)
                     }
-                    .listRowBackground(Color.white)
-
-                    Toggle("Online Status", isOn: .constant(false))
-                        .toggleStyle(SwitchToggleStyle(tint: Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255)))
-                        .padding(.vertical, 8)
-                    
-                    Toggle("Restrict Messaging", isOn: .constant(false))
-                        .toggleStyle(SwitchToggleStyle(tint: Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255)))
-                        .padding(.vertical, 8)
-                    
-                    Toggle("Post Notifications", isOn: .constant(false))
-                        .toggleStyle(SwitchToggleStyle(tint: Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255)))
-                        .padding(.vertical, 8)
-                    
-                    HStack {
-                        Text("Activation Time")
-                            .font(.custom("DMSans-Regular", size: 16))
-                            .foregroundColor(.black)
-                        Spacer()
-                        Text("3:00 PM - 8:00 AM")
-                            .font(.custom("DMSans-Regular", size: 16))
-                            .foregroundColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
-                    }
-                    .padding(.vertical, 8)
                 }
                 .listStyle(PlainListStyle())
                 .background(Color.white)
