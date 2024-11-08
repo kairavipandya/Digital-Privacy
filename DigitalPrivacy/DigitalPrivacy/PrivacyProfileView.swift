@@ -30,8 +30,49 @@ struct PrivacyProfilesView: View {
                 .padding(.horizontal)
 
                 List {
-                    ForEach(profiles) { profile in
+                    // Display a predefined "Personal Profile" section
+                    Section {
                         VStack(alignment: .leading) {
+                            HStack {
+                                Text("Personal Profile")
+                                    .font(.custom("DMSans-Bold", size: 18))
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray)
+                            }
+                            Text("Configure privacy settings for personal time")
+                                .font(.custom("DMSans-Regular", size: 16))
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.vertical, 8)
+                        
+                        Toggle("Online Status", isOn: .constant(false))
+                            .toggleStyle(SwitchToggleStyle(tint: Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255)))
+                            .padding(.vertical, 8)
+                        
+                        Toggle("Restrict Messaging", isOn: .constant(false))
+                            .toggleStyle(SwitchToggleStyle(tint: Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255)))
+                            .padding(.vertical, 8)
+                        
+                        Toggle("Post Notifications", isOn: .constant(false))
+                            .toggleStyle(SwitchToggleStyle(tint: Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255)))
+                            .padding(.vertical, 8)
+                        
+                        HStack {
+                            Text("Activation Time")
+                                .font(.custom("DMSans-Regular", size: 16))
+                                .foregroundColor(.black)
+                            Spacer()
+                            Text("3:00 PM - 8:00 AM")
+                                .font(.custom("DMSans-Regular", size: 16))
+                                .foregroundColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
+                        }
+                        .padding(.vertical, 8)
+                    }
+
+                    // Display each created profile in a structured format
+                    ForEach(profiles) { profile in
+                        VStack(alignment: .leading, spacing: 4) {
                             HStack {
                                 Text(profile.name)
                                     .font(.custom("DMSans-Bold", size: 18))
@@ -39,15 +80,30 @@ struct PrivacyProfilesView: View {
                                 Image(systemName: "chevron.right")
                                     .foregroundColor(.gray)
                             }
-                            Text("Profiles: \(profile.profiles.joined(separator: ", "))")
+                            
+                            Text("Profiles:")
                                 .font(.custom("DMSans-Regular", size: 16))
                                 .foregroundColor(.gray)
-                            Text("Rules: \(profile.rules.joined(separator: ", "))")
+                            Text(profile.profiles.joined(separator: ", "))
+                                .font(.custom("DMSans-Regular", size: 16))
+                                .padding(.leading, 16)
+                            
+                            Text("Rules:")
                                 .font(.custom("DMSans-Regular", size: 16))
                                 .foregroundColor(.gray)
-                            Text("Activation Time: \(profile.startTime) - \(profile.endTime)")
+                            Text(profile.rules.joined(separator: ", "))
                                 .font(.custom("DMSans-Regular", size: 16))
-                                .foregroundColor(.gray)
+                                .padding(.leading, 16)
+                            
+                            HStack {
+                                Text("Activation Time:")
+                                    .font(.custom("DMSans-Regular", size: 16))
+                                    .foregroundColor(.gray)
+                                Spacer()
+                                Text("\(profile.startTime) - \(profile.endTime)")
+                                    .font(.custom("DMSans-Regular", size: 16))
+                                    .foregroundColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
+                            }
                         }
                         .padding(.vertical, 8)
                     }
