@@ -23,46 +23,6 @@ struct DashboardView: View {
                         }
                     }
                     .textCase(nil)
-
-                    Section {
-                        NavigationLink(destination: CustomPrivacyRulesView()) {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text("Custom Privacy Rules")
-                                        .font(.custom("DMSans-Bold", size: 18))
-                                        .foregroundColor(.black)
-                                    Text("Apply to Multiple Accounts")
-                                        .font(.custom("DMSans-Regular", size: 16))
-                                        .foregroundColor(.gray)
-                                }
-                                Spacer()
-                            }
-                            .padding(.vertical, 8)
-                            .background(Color.white)
-                        }
-                    }
-                    .textCase(nil)
-                    .listRowSeparator(.visible)
-
-                    Section {
-                        NavigationLink(destination: PrivacyProfilesView()) {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text("Manage Privacy Profiles")
-                                        .font(.custom("DMSans-Bold", size: 18))
-                                        .foregroundColor(.black)
-                                    Text("School vs Personal")
-                                        .font(.custom("DMSans-Regular", size: 16))
-                                        .foregroundColor(.gray)
-                                }
-                                Spacer()
-                            }
-                            .padding(.vertical, 8)
-                            .background(Color.white)
-                        }
-                    }
-                    .textCase(nil)
-                    .listRowSeparator(.visible)
                 }
                 .listStyle(PlainListStyle())
                 .navigationTitle("Dashboard")
@@ -98,7 +58,7 @@ struct DashboardView: View {
     }
 }
 
-// Helper function to get the corresponding detail view
+// Helper function to navigate to corresponding detail views
 @ViewBuilder
 func getDetailView(for accountName: String) -> some View {
     switch accountName {
