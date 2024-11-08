@@ -6,7 +6,7 @@ struct SocialMediaAccount {
     var imageName: String // This will reference the image in Assets
 }
 
-// Sample data for social media accounts
+// Sa
 let accounts = [
     SocialMediaAccount(name: "Instagram", imageName: "instagram"),
     SocialMediaAccount(name: "Facebook", imageName: "facebook"),
@@ -40,24 +40,19 @@ struct DashboardView: View {
                     .textCase(nil)
 
                     Section {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("Custom Privacy Rules")
-                                    .font(.custom("DMSans-Bold", size: 18))
-                                    .foregroundColor(.black)
-                                Text("Apply to Multiple Accounts")
-                                    .font(.custom("DMSans-Regular", size: 16))
-                                    .foregroundColor(.gray)
+                        NavigationLink(destination: CustomPrivacyRulesView()) {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text("Custom Privacy Rules")
+                                        .font(.custom("DMSans-Bold", size: 18))
+                                        .foregroundColor(.black)
+                                    Text("Apply to Multiple Accounts")
+                                        .font(.custom("DMSans-Regular", size: 16))
+                                        .foregroundColor(.gray)
+                                }
+                                Spacer()
+                                
                             }
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.gray)
-                        }
-                        .padding(.vertical, 8)
-                        .background(Color.white)
-                    }
-                    .textCase(nil)
-                    .listRowSeparator(.visible)
 
                     Section {
                         NavigationLink(destination: PrivacyProfilesView()) {
