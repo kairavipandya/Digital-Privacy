@@ -6,7 +6,7 @@ struct SocialMediaAccount {
     var imageName: String // This will reference the image in Assets
 }
 
-// Sample data for social media accounts
+// Sa
 let accounts = [
     SocialMediaAccount(name: "Instagram", imageName: "instagram"),
     SocialMediaAccount(name: "Facebook", imageName: "facebook"),
@@ -19,47 +19,26 @@ struct DashboardView: View {
         TabView {
             NavigationView {
                 List {
-                    // Social media accounts section with custom logos and increased spacing
                     Section(header: Text("My Accounts").font(.custom("DMSans-Bold", size: 22))) {
-                        
-                        // Add a NavigationLink for Instagram
-                        NavigationLink(destination: InstagramDetailView()) {
-                            HStack {
-                                Image("instagram") // Use the custom image from Assets
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 50, height: 50) // Increased size of the logos
-                                    .clipShape(Circle()) // Clip image to a circle
-                                Text("Instagram")
-                                    .font(.custom("DMSans-Regular", size: 18))
-                                Spacer()
-                                // Removed the extra arrow here
+                        ForEach(accounts, id: \.name) { account in
+                            NavigationLink(destination: InstagramDetailView()) {
+                                HStack {
+                                    Image(account.imageName)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 50, height: 50)
+                                        .clipShape(Circle())
+                                    Text(account.name)
+                                        .font(.custom("DMSans-Regular", size: 18))
+                                    Spacer()
+                                }
+                                .padding(.vertical, 12)
+                                .background(Color.white)
                             }
-                            .padding(.vertical, 12) // Increased vertical padding for more spacing
-                            .background(Color.white)  // Ensure row background is white
-                        }
-
-                        // For the rest of the accounts (Facebook, Snapchat, Twitter)
-                        ForEach(accounts.filter { $0.name != "Instagram" }, id: \.name) { account in
-                            HStack {
-                                Image(account.imageName) // Use the custom image from Assets
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 50, height: 50) // Increased size of the logos
-                                    .clipShape(Circle()) // Clip image to a circle
-                                Text(account.name)
-                                    .font(.custom("DMSans-Regular", size: 18))
-                                Spacer()
-                                Image(systemName: "chevron.right")  // Arrow indicator
-                                    .foregroundColor(.gray)
-                            }
-                            .padding(.vertical, 12) // Increased vertical padding for more spacing
-                            .background(Color.white)  // Ensure row background is white
                         }
                     }
-                    .textCase(nil)  // Preserve original text case for headers
+                    .textCase(nil)
 
-                    // Custom Privacy Rules section with arrow
                     Section {
                         NavigationLink(destination: CustomPrivacyRulesView()) {
                             HStack {
@@ -74,38 +53,32 @@ struct DashboardView: View {
                                 Spacer()
                                 
                             }
-                            .padding(.vertical, 8) // Ensure spacing between header and subheader
-                            .background(Color.white) // Background color for the entire block
-                        }
-                    }
-                    .textCase(nil)  // Preserve original text case for headers
-                    .listRowSeparator(.visible)
 
-
-                    // Manage Privacy Profiles section with arrow
                     Section {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("Manage Privacy Profiles")
-                                    .font(.custom("DMSans-Bold", size: 18))
-                                    .foregroundColor(.black)
-                                Text("School vs Personal")
-                                    .font(.custom("DMSans-Regular", size: 16))
+                        NavigationLink(destination: PrivacyProfilesView()) {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text("Manage Privacy Profiles")
+                                        .font(.custom("DMSans-Bold", size: 18))
+                                        .foregroundColor(.black)
+                                    Text("School vs Personal")
+                                        .font(.custom("DMSans-Regular", size: 16))
+                                        .foregroundColor(.gray)
+                                }
+                                Spacer()
+                                Image(systemName: "chevron.right")
                                     .foregroundColor(.gray)
                             }
-                            Spacer()
-                            Image(systemName: "chevron.right")  // Arrow indicating more details
-                                .foregroundColor(.gray)
+                            .padding(.vertical, 8)
+                            .background(Color.white)
                         }
-                        .padding(.vertical, 8) // Ensure spacing between header and subheader
-                        .background(Color.white) // Background color for the entire block
                     }
-                    .textCase(nil)  // Preserve original text case for headers
-                    .listRowSeparator(.visible)  // Ensure separator is visible between sections
+                    .textCase(nil)
+                    .listRowSeparator(.visible)
                 }
-                .listStyle(PlainListStyle())  // Use PlainListStyle for no separators between sections
+                .listStyle(PlainListStyle())
                 .navigationBarTitle("SafeSphere", displayMode: .large)
-                .background(Color.white.edgesIgnoringSafeArea(.all))  // White background behind the list
+                .background(Color.white.edgesIgnoringSafeArea(.all))
             }
             .tabItem {
                 Image(systemName: "house.fill")
@@ -130,8 +103,8 @@ struct DashboardView: View {
                 Text("Profile")
             }
         }
-        .accentColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))  // Set the selected tab item color to deep purple
-        .background(Color.white.edgesIgnoringSafeArea(.all))  // Set the background color of TabView to white
+        .accentColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
+        .background(Color.white.edgesIgnoringSafeArea(.all))
     }
 }
 
