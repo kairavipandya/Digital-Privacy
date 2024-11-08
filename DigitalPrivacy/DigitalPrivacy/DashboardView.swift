@@ -1,19 +1,3 @@
-import SwiftUI
-
-// Define the social media accounts using custom images
-struct SocialMediaAccount {
-    var name: String
-    var imageName: String // This will reference the image in Assets
-}
-
-// Sample data for social media accounts
-let accounts = [
-    SocialMediaAccount(name: "Instagram", imageName: "instagram"),
-    SocialMediaAccount(name: "Facebook", imageName: "facebook"),
-    SocialMediaAccount(name: "Snapchat", imageName: "snapchat"),
-    SocialMediaAccount(name: "Twitter", imageName: "twitter")
-]
-
 struct DashboardView: View {
     var body: some View {
         TabView {
@@ -22,7 +6,7 @@ struct DashboardView: View {
                 List {
                     Section(header: Text("My Accounts").font(.custom("DMSans-Bold", size: 22))) {
                         ForEach(accounts, id: \.name) { account in
-                            NavigationLink(destination: InstagramDetailView()) {
+                            NavigationLink(destination: getDetailView(for: account.name)) {
                                 HStack {
                                     Image(account.imageName)
                                         .resizable()
@@ -114,8 +98,19 @@ struct DashboardView: View {
     }
 }
 
-struct DashboardView_Previews: PreviewProvider {
-    static var previews: some View {
-        DashboardView()
+// Helper function to get the corresponding detail view
+@ViewBuilder
+func getDetailView(for accountName: String) -> some View {
+    switch accountName {
+    case "Instagram":
+        InstagramDetailView()
+    case "Facebook":
+        FacebookDetailView()
+    case "Snapchat":
+        SnapchatDetailView()
+    case "Twitter":
+        TwitterDetailView()
+    default:
+        Text("Detail view not available.")
     }
 }
