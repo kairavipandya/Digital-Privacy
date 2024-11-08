@@ -52,8 +52,6 @@ struct DashboardView: View {
                                         .foregroundColor(.gray)
                                 }
                                 Spacer()
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray)
                             }
                             .padding(.vertical, 8)
                             .background(Color.white)
@@ -74,8 +72,6 @@ struct DashboardView: View {
                                         .foregroundColor(.gray)
                                 }
                                 Spacer()
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray)
                             }
                             .padding(.vertical, 8)
                             .background(Color.white)
