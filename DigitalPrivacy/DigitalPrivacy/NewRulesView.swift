@@ -5,10 +5,12 @@ struct NewRulesView: View {
     @State private var selectedRuleType: String = "Select"
     @State private var selectedRule: String = "Select"
     @State private var selectedProfile: String = "Select"
+
+    // Binding variable to update the privacy rules in the parent view
+    @Binding var privacyRules: [String]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            // Title
             Text("Create New Rule")
                 .font(.custom("DMSans-Bold", size: 26))
                 .padding(.top, 20)
@@ -84,17 +86,21 @@ struct NewRulesView: View {
             }
             .padding(.horizontal, 16)
 
-            // Apply Rule Button
             Spacer()
+            
+            // Apply Rule Button
             Button(action: {
-                // Action for applying the rule
+                // Add the selected rule to privacyRules if it's not already present
+                if !privacyRules.contains(selectedRuleType) && selectedRuleType != "Select" {
+                    privacyRules.append(selectedRuleType)
+                }
             }) {
                 Text("APPLY RULE")
                     .font(.custom("DMSans-Bold", size: 18))
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
+                    .background(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
                     .cornerRadius(10)
                     .padding(.horizontal, 16)
             }
@@ -106,7 +112,6 @@ struct NewRulesView: View {
 
 struct NewRulesView_Previews: PreviewProvider {
     static var previews: some View {
-        NewRulesView()
+        NewRulesView(privacyRules: .constant(["Content Sharing", "Activity Status", "Facial Recognition"]))
     }
 }
-

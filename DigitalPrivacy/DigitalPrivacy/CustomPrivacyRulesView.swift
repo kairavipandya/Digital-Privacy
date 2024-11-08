@@ -1,65 +1,64 @@
 import SwiftUI
 
 struct CustomPrivacyRulesView: View {
+    // Define a state variable for the list of privacy rules
+    @State private var privacyRules = ["Content Sharing", "Activity Status", "Facial Recognition"]
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // Title
+        VStack(alignment: .leading) {
             Text("Custom Privacy Rules")
                 .font(.custom("DMSans-Bold", size: 26))
-                .padding(.top, 16)
+                .padding(.top, 20)
                 .padding(.leading, 16)
-            
-            // Privacy Rules header with "+" button aligned to the right
-            HStack {
-                Text("Privacy Rules")
-                    .font(.custom("DMSans-Bold", size: 18))
-                Spacer()
-                NavigationLink(destination: NewRulesView()) {
-                    Image(systemName: "plus")
-                        .foregroundColor(.blue)
-                        .font(.title2)
-                }
-                .padding(.trailing, 16)
-            }
-            .padding(.vertical, 8)
-            .padding(.leading, 16)
 
-            // List with Privacy Rules
             List {
-                // Content Sharing item
-                PrivacyRuleListItem(iconName: "square.and.arrow.up", title: "Content Sharing")
+                HStack {
+                    Text("Privacy Rules")
+                        .font(.custom("DMSans-Bold", size: 18))
+                    Spacer()
+                    NavigationLink(destination: NewRulesView(privacyRules: $privacyRules)) {
+                        Text("+")
+                            .font(.custom("DMSans-Bold", size: 24))
+                            .foregroundColor(.blue)
+                            .padding(.trailing, 10) // Aligns the plus sign more towards the right
+                    }
+                }
+                .padding(.vertical, 8)
                 
-                // Activity Status item
-                PrivacyRuleListItem(iconName: "message.circle", title: "Activity Status")
-                
-                // Facial Recognition item
-                PrivacyRuleListItem(iconName: "faceid", title: "Facial Recognition")
+                // Dynamically show the list of privacy rules
+                ForEach(privacyRules, id: \.self) { rule in
+                    HStack {
+                        Image(systemName: getIcon(for: rule))
+                            .font(.title2)
+                            .foregroundColor(.black)
+                        Text(rule)
+                            .font(.custom("DMSans-Regular", size: 18))
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.gray)
+                    }
+                    .padding(.vertical, 8)
+                }
             }
             .listStyle(PlainListStyle())
-            .background(Color.white.edgesIgnoringSafeArea(.all))
         }
-        .background(Color.white.edgesIgnoringSafeArea(.all))
         .navigationBarTitle("Custom Privacy Rules", displayMode: .inline)
     }
-}
 
-// Helper view for individual list items
-struct PrivacyRuleListItem: View {
-    let iconName: String
-    let title: String
-
-    var body: some View {
-        HStack {
-            Image(systemName: iconName)
-                .font(.title2)
-                .foregroundColor(.black)
-            Text(title)
-                .font(.custom("DMSans-Regular", size: 18))
-            Spacer()
-            Image(systemName: "chevron.right")
-                .foregroundColor(.gray)
+    // Helper function to get icon based on rule type
+    func getIcon(for rule: String) -> String {
+        switch rule {
+        case "Content Sharing":
+            return "square.and.arrow.up"
+        case "Activity Status":
+            return "message.circle"
+        case "Facial Recognition":
+            return "faceid"
+        case "Location":
+            return "location.circle"
+        default:
+            return "questionmark.circle"
         }
-        .padding(.vertical, 8)
     }
 }
 
