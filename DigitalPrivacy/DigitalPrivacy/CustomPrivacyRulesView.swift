@@ -9,20 +9,23 @@ struct CustomPrivacyRulesView: View {
                 .padding(.top, 16)
                 .padding(.leading, 16)
             
+            // Privacy Rules header with "+" button aligned to the right
+            HStack {
+                Text("Privacy Rules")
+                    .font(.custom("DMSans-Bold", size: 18))
+                Spacer()
+                NavigationLink(destination: NewRulesView()) {
+                    Image(systemName: "plus")
+                        .foregroundColor(.blue)
+                        .font(.title2)
+                }
+                .padding(.trailing, 16)
+            }
+            .padding(.vertical, 8)
+            .padding(.leading, 16)
+
             // List with Privacy Rules
             List {
-                // Privacy Rules header with "+" button
-                HStack {
-                    Text("Privacy Rules")
-                        .font(.custom("DMSans-Bold", size: 18))
-                    Spacer()
-                    NavigationLink(destination: NewRulesView()) {
-                        Image(systemName: "plus")
-                            .foregroundColor(.black)
-                    }
-                }
-                .padding(.vertical, 8)
-                
                 // Content Sharing item
                 PrivacyRuleListItem(iconName: "square.and.arrow.up", title: "Content Sharing")
                 
