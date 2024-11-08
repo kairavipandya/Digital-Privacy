@@ -17,7 +17,7 @@ struct CreatePrivacyProfileView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                Text("")
+                Text("Create New Privacy Profile")
                     .font(.custom("DMSans-Bold", size: 24))
                     .padding(.top)
 
@@ -83,6 +83,6 @@ struct CreatePrivacyProfileView: View {
             .padding()
         }
         .background(Color.white.edgesIgnoringSafeArea(.all))
-        .navigationBarTitle("Create New Privacy Profile", displayMode: .inline)
+        .navigationBarBackButtonHidden(true) // Hide extra back button
     }
 }

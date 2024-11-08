@@ -2,39 +2,36 @@ import SwiftUI
 
 struct InstagramDetailView: View {
     var body: some View {
-        NavigationView {
-            List {
-                Section(header: Text("Instagram Account")
-                            .font(.custom("DMSans-Bold", size: 18))) {
+        List {
+            Section(header: Text("Instagram Account")
+                        .font(.custom("DMSans-Bold", size: 18))) {
 
-                    NavigationLink(destination: ProfileVisibilityView()) {
-                        SettingItem(icon: "eye", title: "Profile Visibility")
-                    }
-
-                    SettingItem(icon: "figure.walk", title: "Activity Status")
-                    SettingItem(icon: "location", title: "Location Services")
-                    SettingItem(icon: "nosign", title: "Blocked Accounts")
-                    SettingItem(icon: "arrow.triangle.2.circlepath", title: "Data Sharing")
+                NavigationLink(destination: ProfileVisibilityView()) {
+                    SettingItem(icon: "eye", title: "Profile Visibility")
                 }
 
-                Section(header: Text("Additional Settings")
-                            .font(.custom("DMSans-Bold", size: 18))) {
-                    SettingItem(icon: "magnifyingglass", title: "Search History")
-                    SettingItem(icon: "link", title: "Connected Apps")
-                    SettingItem(icon: "lock.shield", title: "Privacy Policy")
-                    SettingItem(icon: "doc.plaintext", title: "Terms of Service")
-                    SettingItem(icon: "questionmark.circle", title: "Help Center")
-                }
+                SettingItem(icon: "figure.walk", title: "Activity Status")
+                SettingItem(icon: "location", title: "Location Services")
+                SettingItem(icon: "nosign", title: "Blocked Accounts")
+                SettingItem(icon: "arrow.triangle.2.circlepath", title: "Data Sharing")
             }
-            .listStyle(PlainListStyle())
-            .navigationTitle("Instagram Settings")
-            .navigationBarTitleDisplayMode(.inline)
+
+            Section(header: Text("Additional Settings")
+                        .font(.custom("DMSans-Bold", size: 18))) {
+                SettingItem(icon: "magnifyingglass", title: "Search History")
+                SettingItem(icon: "link", title: "Connected Apps")
+                SettingItem(icon: "lock.shield", title: "Privacy Policy")
+                SettingItem(icon: "doc.plaintext", title: "Terms of Service")
+                SettingItem(icon: "questionmark.circle", title: "Help Center")
+            }
         }
-        .background(Color.white.edgesIgnoringSafeArea(.all))
+        .listStyle(PlainListStyle())
+        .navigationTitle("Instagram Settings")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
-// SettingItem component (included within the same file for simplicity)
+// SettingItem component
 struct SettingItem: View {
     let icon: String
     let title: String

@@ -1,6 +1,6 @@
-import SwiftUI
 
-// Data model for storing profile information
+import Foundation
+
 struct PrivacyProfile: Identifiable {
     let id = UUID()
     let name: String
@@ -9,6 +9,8 @@ struct PrivacyProfile: Identifiable {
     let startTime: String
     let endTime: String
 }
+
+import SwiftUI
 
 struct PrivacyProfilesView: View {
     @State private var profiles: [PrivacyProfile] = []
@@ -111,15 +113,9 @@ struct PrivacyProfilesView: View {
                 .listStyle(PlainListStyle())
                 .background(Color.white)
             }
-            .navigationTitle("Privacy Profiles")
+            .navigationTitle("Manage Privacy Profiles")
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.white.edgesIgnoringSafeArea(.all))
         }
-    }
-}
-
-struct PrivacyProfilesView_Previews: PreviewProvider {
-    static var previews: some View {
-        PrivacyProfilesView()
     }
 }

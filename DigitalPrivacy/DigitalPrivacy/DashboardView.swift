@@ -6,7 +6,7 @@ struct SocialMediaAccount {
     var imageName: String // This will reference the image in Assets
 }
 
-// Sa
+// Sample data for social media accounts
 let accounts = [
     SocialMediaAccount(name: "Instagram", imageName: "instagram"),
     SocialMediaAccount(name: "Facebook", imageName: "facebook"),
@@ -17,6 +17,7 @@ let accounts = [
 struct DashboardView: View {
     var body: some View {
         TabView {
+            // Home Tab
             NavigationView {
                 List {
                     Section(header: Text("My Accounts").font(.custom("DMSans-Bold", size: 22))) {
@@ -51,8 +52,15 @@ struct DashboardView: View {
                                         .foregroundColor(.gray)
                                 }
                                 Spacer()
-                                
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray)
                             }
+                            .padding(.vertical, 8)
+                            .background(Color.white)
+                        }
+                    }
+                    .textCase(nil)
+                    .listRowSeparator(.visible)
 
                     Section {
                         NavigationLink(destination: PrivacyProfilesView()) {
@@ -77,7 +85,7 @@ struct DashboardView: View {
                     .listRowSeparator(.visible)
                 }
                 .listStyle(PlainListStyle())
-                .navigationBarTitle("SafeSphere", displayMode: .large)
+                .navigationTitle("Dashboard")
                 .background(Color.white.edgesIgnoringSafeArea(.all))
             }
             .tabItem {
@@ -85,8 +93,9 @@ struct DashboardView: View {
                 Text("Home")
             }
 
+            // Settings Tab
             NavigationView {
-                Text("Settings View")
+                SettingsView()
                     .navigationBarTitle("Settings", displayMode: .inline)
             }
             .tabItem {
@@ -94,8 +103,9 @@ struct DashboardView: View {
                 Text("Settings")
             }
 
+            // Profile Tab
             NavigationView {
-                Text("Profile View")
+                ProfileView()
                     .navigationBarTitle("Profile", displayMode: .inline)
             }
             .tabItem {
