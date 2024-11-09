@@ -19,9 +19,9 @@ struct ProfileView: View {
                                 .font(.custom("DMSans-Bold", size: 18))
                                 .padding(.horizontal, 16)) {
                         VStack(spacing: 16) {
-                            ProfileInfoRow(title: "Name", value: "Kairavi Pandya")
-                            ProfileInfoRow(title: "Email", value: "kairavi@example.com")
-                            ProfileInfoRow(title: "Phone", value: "+1 (510) 679-8959")
+                            ProfileInfoRow(title: "Name", value: "Jane Doe")
+                            ProfileInfoRow(title: "Email", value: "jane.doe@gmail.com")
+                            ProfileInfoRow(title: "Phone", value: "+1 (980) 123-4567")
                         }
                     }
                     

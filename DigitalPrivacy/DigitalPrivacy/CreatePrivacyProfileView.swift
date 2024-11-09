@@ -83,6 +83,7 @@ struct CreatePrivacyProfileView: View {
             .padding()
         }
         .background(Color.white.edgesIgnoringSafeArea(.all))
-        .navigationBarBackButtonHidden(true) // Hide extra back button
+        .navigationTitle("Create New Privacy Profile")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
