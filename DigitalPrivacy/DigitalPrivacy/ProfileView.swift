@@ -2,49 +2,79 @@ import SwiftUI
 
 struct ProfileView: View {
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading, spacing: 20) {
-                // User Info Section
-                VStack(alignment: .center, spacing: 16) {
-                    Image(systemName: "person.crop.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 100, height: 100)
-                        .foregroundColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
-
-                    Text("John Doe")
-                        .font(.custom("DMSans-Bold", size: 22))
-
-                    Text("johndoe@example.com")
-                        .font(.custom("DMSans-Regular", size: 16))
-                        .foregroundColor(.gray)
-                }
-                .frame(maxWidth: .infinity)
-                .padding()
-
-                // Profile Actions
-                Section(header: Text("Account")
-                            .font(.custom("DMSans-Bold", size: 18))
-                            .padding(.horizontal, 16)) {
-                    VStack(spacing: 16) {
-                        ProfileItem(icon: "person", title: "Edit Profile")
-                        ProfileItem(icon: "lock.shield", title: "Change Password")
-                        ProfileItem(icon: "arrowshape.turn.up.left", title: "Logout")
+        ZStack {
+            Color.white.edgesIgnoringSafeArea(.all) // Ensure background covers everything
+            
+            ScrollView {
+                VStack(alignment: .leading, spacing: 24) { // Consistent spacing between sections
+                    // Title Section
+                    Text("Profile")
+                        .font(.custom("DMSans-Bold", size: 26))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 16)
+                        .padding(.top, 16)
+                    
+                    // Profile Information Section
+                    Section(header: Text("Your Info")
+                                .font(.custom("DMSans-Bold", size: 18))
+                                .padding(.horizontal, 16)) {
+                        VStack(spacing: 16) {
+                            ProfileInfoRow(title: "Name", value: "Kairavi Pandya")
+                            ProfileInfoRow(title: "Email", value: "kairavi@example.com")
+                            ProfileInfoRow(title: "Phone", value: "+1 (510) 679-8959")
+                        }
+                    }
+                    
+                    // Account Actions Section
+                    Section(header: Text("Account")
+                                .font(.custom("DMSans-Bold", size: 18))
+                                .padding(.horizontal, 16)) {
+                        VStack(spacing: 16) {
+                            ProfileActionRow(icon: "person.crop.circle.badge.plus", title: "Edit Profile")
+                            ProfileActionRow(icon: "lock", title: "Change Password")
+                            ProfileActionRow(icon: "arrowshape.turn.up.right", title: "Log Out")
+                        }
+                    }
+                    
+                    // About Section
+                    Section(header: Text("About")
+                                .font(.custom("DMSans-Bold", size: 18))
+                                .padding(.horizontal, 16)) {
+                        VStack(spacing: 16) {
+                            ProfileInfoRow(title: "App Version", value: "1.0.0")
+                            ProfileInfoRow(title: "Developer", value: "SafeSphere Inc.")
+                        }
                     }
                 }
-                Spacer()
+                .padding(.bottom, 20) // Add padding at the bottom
             }
-            .navigationTitle("Profile")
-            .padding(.top, 16)
-            .background(Color.white.edgesIgnoringSafeArea(.all))
         }
     }
 }
 
-struct ProfileItem: View {
+// Row for Profile Information
+struct ProfileInfoRow: View {
+    let title: String
+    let value: String
+    
+    var body: some View {
+        HStack {
+            Text(title)
+                .font(.custom("DMSans-Regular", size: 16))
+            Spacer()
+            Text(value)
+                .font(.custom("DMSans-Regular", size: 16))
+                .foregroundColor(.gray)
+        }
+        .padding(.horizontal, 16)
+    }
+}
+
+// Row for Profile Actions
+struct ProfileActionRow: View {
     let icon: String
     let title: String
-
+    
     var body: some View {
         HStack {
             Image(systemName: icon)
@@ -52,14 +82,9 @@ struct ProfileItem: View {
                 .imageScale(.large)
             Text(title)
                 .font(.custom("DMSans-Regular", size: 16))
-                .foregroundColor(.black)
             Spacer()
-            Image(systemName: "chevron.right")
-                .foregroundColor(.gray)
         }
-        .padding(.vertical, 12)
         .padding(.horizontal, 16)
-        .background(Color.white)
     }
 }
 
