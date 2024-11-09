@@ -1,63 +1,65 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @State private var childName = "Alex"
-    @State private var age = "10"
-    @State private var privacySettings = [
-        "Online Status": false,
-        "Restrict Messaging": true,
-        "Post Notifications": false,
-        "Location Services": false
-    ]
-
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 20) {
-                Text("Profile")
-                    .font(.custom("DMSans-Bold", size: 24))
-                    .padding(.top, 20)
-                
-                HStack {
-                    Text("Name:")
-                        .font(.custom("DMSans-Regular", size: 18))
-                    Spacer()
-                    Text(childName)
-                        .font(.custom("DMSans-Regular", size: 18))
+                // User Info Section
+                VStack(alignment: .center, spacing: 16) {
+                    Image(systemName: "person.crop.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100)
+                        .foregroundColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
+
+                    Text("John Doe")
+                        .font(.custom("DMSans-Bold", size: 22))
+
+                    Text("johndoe@example.com")
+                        .font(.custom("DMSans-Regular", size: 16))
                         .foregroundColor(.gray)
                 }
-                
-                HStack {
-                    Text("Age:")
-                        .font(.custom("DMSans-Regular", size: 18))
-                    Spacer()
-                    Text(age)
-                        .font(.custom("DMSans-Regular", size: 18))
-                        .foregroundColor(.gray)
+                .frame(maxWidth: .infinity)
+                .padding()
+
+                // Profile Actions
+                Section(header: Text("Account")
+                            .font(.custom("DMSans-Bold", size: 18))
+                            .padding(.horizontal, 16)) {
+                    VStack(spacing: 16) {
+                        ProfileItem(icon: "person", title: "Edit Profile")
+                        ProfileItem(icon: "lock.shield", title: "Change Password")
+                        ProfileItem(icon: "arrowshape.turn.up.left", title: "Logout")
+                    }
                 }
-                
-                Divider()
-                
-                Text("Privacy Settings")
-                    .font(.custom("DMSans-Bold", size: 18))
-                    .padding(.bottom, 10)
-                
-                ForEach(privacySettings.keys.sorted(), id: \.self) { setting in
-                    Toggle(setting, isOn: Binding(
-                        get: { self.privacySettings[setting] ?? false },
-                        set: { self.privacySettings[setting] = $0 }
-                    ))
-                    .toggleStyle(SwitchToggleStyle(tint: Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255)))
-                    .font(.custom("DMSans-Regular", size: 16))
-                    .padding(.vertical, 8)
-                }
-                
                 Spacer()
             }
-            .padding()
-            .background(Color.white.edgesIgnoringSafeArea(.all))
             .navigationTitle("Profile")
-            .navigationBarTitleDisplayMode(.inline)
+            .padding(.top, 16)
+            .background(Color.white.edgesIgnoringSafeArea(.all))
         }
+    }
+}
+
+struct ProfileItem: View {
+    let icon: String
+    let title: String
+
+    var body: some View {
+        HStack {
+            Image(systemName: icon)
+                .foregroundColor(.gray)
+                .imageScale(.large)
+            Text(title)
+                .font(.custom("DMSans-Regular", size: 16))
+                .foregroundColor(.black)
+            Spacer()
+            Image(systemName: "chevron.right")
+                .foregroundColor(.gray)
+        }
+        .padding(.vertical, 12)
+        .padding(.horizontal, 16)
+        .background(Color.white)
     }
 }
 
