@@ -6,7 +6,7 @@ struct SocialMediaAccount {
     var imageName: String // This will reference the image in Assets
 }
 
-// Sa
+// Sample accounts
 let accounts = [
     SocialMediaAccount(name: "Instagram", imageName: "instagram"),
     SocialMediaAccount(name: "Facebook", imageName: "facebook"),
@@ -38,7 +38,7 @@ struct DashboardView: View {
                         }
                     }
                     .textCase(nil)
-
+                    
                     Section {
                         NavigationLink(destination: CustomPrivacyRulesView()) {
                             HStack {
@@ -51,9 +51,12 @@ struct DashboardView: View {
                                         .foregroundColor(.gray)
                                 }
                                 Spacer()
-                                
                             }
-
+                        }
+                        .padding(.vertical, 8)
+                        .background(Color.white)
+                    }
+                    
                     Section {
                         NavigationLink(destination: PrivacyProfilesView()) {
                             HStack {
@@ -73,10 +76,9 @@ struct DashboardView: View {
                             .background(Color.white)
                         }
                     }
-                    .textCase(nil)
-                    .listRowSeparator(.visible)
                 }
                 .listStyle(PlainListStyle())
+                .accentColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
                 .navigationBarTitle("SafeSphere", displayMode: .large)
                 .background(Color.white.edgesIgnoringSafeArea(.all))
             }
@@ -84,7 +86,7 @@ struct DashboardView: View {
                 Image(systemName: "house.fill")
                 Text("Home")
             }
-
+            
             NavigationView {
                 Text("Settings View")
                     .navigationBarTitle("Settings", displayMode: .inline)
@@ -93,7 +95,7 @@ struct DashboardView: View {
                 Image(systemName: "gear")
                 Text("Settings")
             }
-
+            
             NavigationView {
                 Text("Profile View")
                     .navigationBarTitle("Profile", displayMode: .inline)
@@ -103,13 +105,13 @@ struct DashboardView: View {
                 Text("Profile")
             }
         }
-        .accentColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
-        .background(Color.white.edgesIgnoringSafeArea(.all))
     }
 }
 
+// Move the PreviewProvider struct outside of the main DashboardView struct
 struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
         DashboardView()
+            .previewDevice("iPhone 16")
     }
 }
