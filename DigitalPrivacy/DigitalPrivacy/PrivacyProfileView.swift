@@ -36,8 +36,7 @@ struct PrivacyProfilesView: View {
                             Text("Personal Profile")
                                 .font(.custom("DMSans-Bold", size: 18))
                             Spacer()
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.gray)
+            
                         }
                         Text("Configure privacy settings for personal time")
                             .font(.custom("DMSans-Regular", size: 16))

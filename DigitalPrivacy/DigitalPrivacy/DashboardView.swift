@@ -17,6 +17,7 @@ let accounts = [
 struct DashboardView: View {
     var body: some View {
         TabView {
+            // Home Tab
             NavigationView {
                 List {
                     Section(header: Text("My Accounts").font(.custom("DMSans-Bold", size: 22))) {
@@ -69,8 +70,6 @@ struct DashboardView: View {
                                         .foregroundColor(.gray)
                                 }
                                 Spacer()
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray)
                             }
                             .padding(.vertical, 8)
                             .background(Color.white)
@@ -87,8 +86,9 @@ struct DashboardView: View {
                 Text("Home")
             }
             
+            // Settings Tab
             NavigationView {
-                Text("Settings View")
+                SettingsView() // Link to the SettingsView
                     .navigationBarTitle("Settings", displayMode: .inline)
             }
             .tabItem {
@@ -96,8 +96,9 @@ struct DashboardView: View {
                 Text("Settings")
             }
             
+            // Profile Tab
             NavigationView {
-                Text("Profile View")
+                ProfileView() // Link to the ProfileView
                     .navigationBarTitle("Profile", displayMode: .inline)
             }
             .tabItem {

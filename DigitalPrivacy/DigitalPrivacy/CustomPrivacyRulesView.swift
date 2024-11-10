@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct CustomPrivacyRulesView: View {
-    // Define a state variable for the list of privacy rules
+    // State variable for the list of privacy rules
     @State private var privacyRules = ["Content Sharing", "Activity Status", "Facial Recognition"]
+    @State private var recentlyAddedRule: String? // To track the newly added rule
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -13,14 +14,14 @@ struct CustomPrivacyRulesView: View {
 
             List {
                 HStack {
-                    Text("Privacy Rules")
+                    Text("Create a New Privacy Rule")
                         .font(.custom("DMSans-Bold", size: 18))
                     Spacer()
-                    NavigationLink(destination: NewRulesView(privacyRules: $privacyRules)) {
+                    NavigationLink(destination: NewRulesView(privacyRules: $privacyRules, recentlyAddedRule: $recentlyAddedRule)) {
                         Text("+")
                             .font(.custom("DMSans-Bold", size: 24))
                             .foregroundColor(.blue)
-                            .padding(.trailing, 10) // Aligns the plus sign more towards the right
+                            .padding(.trailing, 10)
                     }
                 }
                 .padding(.vertical, 8)
@@ -33,6 +34,7 @@ struct CustomPrivacyRulesView: View {
                             .foregroundColor(.black)
                         Text(rule)
                             .font(.custom("DMSans-Regular", size: 18))
+                            .foregroundColor(recentlyAddedRule == rule ? .blue : .black) // Highlight new rule
                         Spacer()
                         Image(systemName: "chevron.right")
                             .foregroundColor(.gray)
