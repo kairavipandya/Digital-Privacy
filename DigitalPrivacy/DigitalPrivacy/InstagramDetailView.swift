@@ -1,15 +1,15 @@
 import SwiftUI
 
 struct InstagramDetailView: View {
+    @State private var profileVisibility: String = "Public" // Default visibility
+
     var body: some View {
         List {
             Section(header: Text("Account")
                         .font(.custom("DMSans-Bold", size: 18))) {
-
-                NavigationLink(destination: ProfileVisibilityView()) {
-                    SettingItem(icon: "eye", title: "Profile Visibility")
+                NavigationLink(destination: ProfileVisibilityView(profileVisibility: $profileVisibility)) {
+                    SettingItem(icon: "eye", title: "Profile Visibility (\(profileVisibility))")
                 }
-
                 SettingItem(icon: "figure.walk", title: "Activity Status")
                 SettingItem(icon: "location", title: "Location Services")
                 SettingItem(icon: "nosign", title: "Blocked Accounts")
@@ -31,7 +31,6 @@ struct InstagramDetailView: View {
     }
 }
 
-// SettingItem component
 struct SettingItem: View {
     let icon: String
     let title: String

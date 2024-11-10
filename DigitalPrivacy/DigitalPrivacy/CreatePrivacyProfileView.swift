@@ -6,10 +6,10 @@ struct CreatePrivacyProfileView: View {
     @State private var profileName = ""
     @State private var selectedProfiles: Set<String> = []
     @State private var selectedRules: Set<String> = []
-    @State private var startTime = "Select"
-    @State private var endTime = "Select"
+    @State private var startTime: String? = nil
+    @State private var endTime: String? = nil
     
-    @Environment(\.presentationMode) var presentationMode  // For dismissing the view
+    @Environment(\.presentationMode) var presentationMode // For dismissing the view
 
     let timeOptions = [
         "12:00 AM", "1:00 AM", "2:00 AM", "3:00 AM", "4:00 AM", "5:00 AM", "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM",
@@ -19,69 +19,167 @@ struct CreatePrivacyProfileView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Title Text
+                // Title
                 Text("Create Privacy Profile")
-                    .font(.custom("DMSans-Bold", size: 24))
+                    .font(.custom("DMSans-Bold", size: 26))
                     .padding(.top)
 
-                Group {
+                // Profile Name Input
+                VStack(alignment: .leading, spacing: 10) {
                     Text("Enter Profile Name")
-                        .font(.custom("DMSans-Regular", size: 16))
+                        .font(.custom("DMSans-Bold", size: 16))
+                        .foregroundColor(.black)
                     TextField("Profile Name", text: $profileName)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.bottom)
-
-                    Text("Select Profiles")
-                        .font(.custom("DMSans-Regular", size: 16))
-                    MultiSelectDropdown(options: ["Instagram", "Facebook", "Snapchat", "Twitter"], selectedOptions: $selectedProfiles)
-                        .padding(.bottom)
-
-                    Text("Add Rules")
-                        .font(.custom("DMSans-Regular", size: 16))
-                    MultiSelectDropdown(options: ["Online Status", "Restrict Messaging", "Post Notifications", "Facial Recognition"], selectedOptions: $selectedRules)
-                        .padding(.bottom)
-
-                    Text("Set Activation Start Time")
-                        .font(.custom("DMSans-Regular", size: 16))
-                    Picker("Select", selection: $startTime) {
-                        ForEach(timeOptions, id: \.self) { time in
-                            Text(time).tag(time)
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                    .padding(.bottom)
-
-                    Text("Set Activation End Time")
-                        .font(.custom("DMSans-Regular", size: 16))
-                    Picker("Select", selection: $endTime) {
-                        ForEach(timeOptions, id: \.self) { time in
-                            Text(time).tag(time)
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                    .padding(.bottom)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                        )
                 }
 
-                Spacer()
+                // Select Profiles Dropdown
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Select Profiles")
+                        .font(.custom("DMSans-Bold", size: 16))
+                        .foregroundColor(.black)
+                    Menu {
+                        ForEach(["Instagram", "Facebook", "Snapchat", "Twitter"], id: \.self) { profile in
+                            Button(action: {
+                                if selectedProfiles.contains(profile) {
+                                    selectedProfiles.remove(profile)
+                                } else {
+                                    selectedProfiles.insert(profile)
+                                }
+                            }) {
+                                Text(profile)
+                                if selectedProfiles.contains(profile) {
+                                    Image(systemName: "checkmark")
+                                }
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            Text(selectedProfiles.isEmpty ? "Select Profiles" : selectedProfiles.joined(separator: ", "))
+                                .foregroundColor(selectedProfiles.isEmpty ? .gray : .black)
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                                .foregroundColor(.gray)
+                        }
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                        )
+                    }
+                }
 
+                // Add Rules Dropdown
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Add Rules")
+                        .font(.custom("DMSans-Bold", size: 16))
+                        .foregroundColor(.black)
+                    Menu {
+                        ForEach(["Online Status", "Restrict Messaging", "Post Notifications", "Facial Recognition"], id: \.self) { rule in
+                            Button(action: {
+                                if selectedRules.contains(rule) {
+                                    selectedRules.remove(rule)
+                                } else {
+                                    selectedRules.insert(rule)
+                                }
+                            }) {
+                                Text(rule)
+                                if selectedRules.contains(rule) {
+                                    Image(systemName: "checkmark")
+                                }
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            Text(selectedRules.isEmpty ? "Select Rules" : selectedRules.joined(separator: ", "))
+                                .foregroundColor(selectedRules.isEmpty ? .gray : .black)
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                                .foregroundColor(.gray)
+                        }
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                        )
+                    }
+                }
+
+                // Set Activation Time
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Set Activation Time")
+                        .font(.custom("DMSans-Bold", size: 16))
+                        .foregroundColor(.black)
+                    HStack(spacing: 20) {
+                        // Start Time Dropdown
+                        Menu {
+                            ForEach(timeOptions, id: \.self) { time in
+                                Button(action: { startTime = time }) {
+                                    Text(time)
+                                }
+                            }
+                        } label: {
+                            HStack {
+                                Text(startTime ?? "Select Time")
+                                    .foregroundColor(startTime == nil ? .gray : .black)
+                                Spacer()
+                                Image(systemName: "chevron.down")
+                                    .foregroundColor(.gray)
+                            }
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                            )
+                        }
+
+                        // End Time Dropdown
+                        Menu {
+                            ForEach(timeOptions, id: \.self) { time in
+                                Button(action: { endTime = time }) {
+                                    Text(time)
+                                }
+                            }
+                        } label: {
+                            HStack {
+                                Text(endTime ?? "Select Time")
+                                    .foregroundColor(endTime == nil ? .gray : .black)
+                                Spacer()
+                                Image(systemName: "chevron.down")
+                                    .foregroundColor(.gray)
+                            }
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                            )
+                        }
+                    }
+                }
+
+                // Apply Rule Button
                 Button(action: {
                     let newProfile = PrivacyProfile(
                         name: profileName,
                         profiles: selectedProfiles,
                         rules: selectedRules,
-                        startTime: startTime,
-                        endTime: endTime
+                        startTime: startTime ?? "Select",
+                        endTime: endTime ?? "Select"
                     )
                     profiles.append(newProfile)
                     
-                    // Clear the input fields
+                    // Reset Fields
                     profileName = ""
                     selectedProfiles = []
                     selectedRules = []
-                    startTime = "Select"
-                    endTime = "Select"
+                    startTime = nil
+                    endTime = nil
                     
-                    // Dismiss the view
+                    // Dismiss the View
                     presentationMode.wrappedValue.dismiss()
                 }) {
                     Text("APPLY RULE")
@@ -93,11 +191,11 @@ struct CreatePrivacyProfileView: View {
                         .cornerRadius(10)
                 }
                 .padding(.horizontal)
-                .padding(.bottom, 10)
+                .padding(.bottom, 20)
             }
-            .padding()
+            .padding(.horizontal)
         }
         .background(Color.white.edgesIgnoringSafeArea(.all))
-        .navigationBarTitle("Create New Privacy Profile", displayMode: .inline)
+        .navigationBarTitle("Create Privacy Profile", displayMode: .inline)
     }
 }

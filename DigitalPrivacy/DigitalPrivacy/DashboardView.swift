@@ -20,6 +20,7 @@ struct DashboardView: View {
             // Home Tab
             NavigationView {
                 List {
+                    // My Accounts Section
                     Section(header: Text("My Accounts").font(.custom("DMSans-Bold", size: 22))) {
                         ForEach(accounts, id: \.name) { account in
                             NavigationLink(destination: InstagramDetailView()) {
@@ -40,6 +41,7 @@ struct DashboardView: View {
                     }
                     .textCase(nil)
                     
+                    // Custom Privacy Rules Section
                     Section {
                         NavigationLink(destination: CustomPrivacyRulesView()) {
                             HStack {
@@ -58,6 +60,7 @@ struct DashboardView: View {
                         .background(Color.white)
                     }
                     
+                    // Manage Privacy Profiles Section
                     Section {
                         NavigationLink(destination: PrivacyProfilesView()) {
                             HStack {
@@ -77,7 +80,7 @@ struct DashboardView: View {
                     }
                 }
                 .listStyle(PlainListStyle())
-                .accentColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
+                .accentColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255)) // Set the accent color
                 .navigationBarTitle("SafeSphere", displayMode: .large)
                 .background(Color.white.edgesIgnoringSafeArea(.all))
             }
@@ -106,6 +109,7 @@ struct DashboardView: View {
                 Text("Profile")
             }
         }
+        .accentColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255)) // Set the global TabView accent color
     }
 }
 

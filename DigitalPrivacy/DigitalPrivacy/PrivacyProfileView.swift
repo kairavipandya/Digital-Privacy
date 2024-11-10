@@ -29,41 +29,39 @@ struct PrivacyProfilesView: View {
             .padding(.horizontal)
 
             List {
-                // Display a predefined "Personal Profile" section
+                // Updated "Personal Profile" to look like saved profiles
                 Section {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 4) {
                         HStack {
                             Text("Personal Profile")
                                 .font(.custom("DMSans-Bold", size: 18))
                             Spacer()
-            
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.gray)
                         }
-                        Text("Configure privacy settings for personal time")
+                        Text("Profiles:")
                             .font(.custom("DMSans-Regular", size: 16))
                             .foregroundColor(.gray)
-                    }
-                    .padding(.vertical, 8)
-                    
-                    Toggle("Online Status", isOn: .constant(false))
-                        .toggleStyle(SwitchToggleStyle(tint: Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255)))
-                        .padding(.vertical, 8)
-                    
-                    Toggle("Restrict Messaging", isOn: .constant(false))
-                        .toggleStyle(SwitchToggleStyle(tint: Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255)))
-                        .padding(.vertical, 8)
-                    
-                    Toggle("Post Notifications", isOn: .constant(false))
-                        .toggleStyle(SwitchToggleStyle(tint: Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255)))
-                        .padding(.vertical, 8)
-                    
-                    HStack {
-                        Text("Activation Time")
+                        Text("All Accounts")
                             .font(.custom("DMSans-Regular", size: 16))
-                            .foregroundColor(.black)
-                        Spacer()
-                        Text("3:00 PM - 8:00 AM")
+                            .padding(.leading, 16)
+                        
+                        Text("Rules:")
                             .font(.custom("DMSans-Regular", size: 16))
-                            .foregroundColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
+                            .foregroundColor(.gray)
+                        Text("Online Status, Restrict Messaging, Post Notifications")
+                            .font(.custom("DMSans-Regular", size: 16))
+                            .padding(.leading, 16)
+                        
+                        HStack {
+                            Text("Activation Time:")
+                                .font(.custom("DMSans-Regular", size: 16))
+                                .foregroundColor(.gray)
+                            Spacer()
+                            Text("3:00 PM - 8:00 AM")
+                                .font(.custom("DMSans-Regular", size: 16))
+                                .foregroundColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
+                        }
                     }
                     .padding(.vertical, 8)
                 }

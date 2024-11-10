@@ -1,7 +1,9 @@
 import SwiftUI
 
 struct ProfileVisibilityView: View {
-    @State private var selectedOption = "Public"
+    @Binding var profileVisibility: String
+    @Environment(\.presentationMode) var presentationMode // For dismissing the view
+    @State private var showNotification = false // Show notification when changes are saved
 
     var body: some View {
         VStack {
@@ -11,17 +13,17 @@ struct ProfileVisibilityView: View {
                     .padding(.bottom, 20)
 
                 Group {
-                    ProfileVisibilityOption(title: "Public", isSelected: selectedOption == "Public") {
-                        selectedOption = "Public"
+                    ProfileVisibilityOption(title: "Public", isSelected: profileVisibility == "Public") {
+                        profileVisibility = "Public"
                     }
-                    ProfileVisibilityOption(title: "Friends Only", isSelected: selectedOption == "Friends Only") {
-                        selectedOption = "Friends Only"
+                    ProfileVisibilityOption(title: "Friends Only", isSelected: profileVisibility == "Friends Only") {
+                        profileVisibility = "Friends Only"
                     }
-                    ProfileVisibilityOption(title: "Private", isSelected: selectedOption == "Private") {
-                        selectedOption = "Private"
+                    ProfileVisibilityOption(title: "Private", isSelected: profileVisibility == "Private") {
+                        profileVisibility = "Private"
                     }
-                    ProfileVisibilityOption(title: "Deactivate", isSelected: selectedOption == "Deactivate") {
-                        selectedOption = "Deactivate"
+                    ProfileVisibilityOption(title: "Deactivate", isSelected: profileVisibility == "Deactivate") {
+                        profileVisibility = "Deactivate"
                     }
                 }
             }
@@ -30,7 +32,13 @@ struct ProfileVisibilityView: View {
             Spacer()
 
             Button(action: {
-                print("Saved: \(selectedOption)")
+                // Save changes and show notification
+                showNotification = true
+
+                // Dismiss view after a short delay
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    presentationMode.wrappedValue.dismiss()
+                }
             }) {
                 Text("SAVE CHANGES")
                     .font(.custom("DMSans-Bold", size: 16))
@@ -45,10 +53,16 @@ struct ProfileVisibilityView: View {
         }
         .background(Color.white.edgesIgnoringSafeArea(.all))
         .navigationBarTitle("Profile Visibility", displayMode: .inline)
+        .overlay(
+            Group {
+                if showNotification {
+                    NotificationView(message: "Profile visibility updated to \(profileVisibility)!")
+                }
+            }
+        )
     }
 }
 
-// ProfileVisibilityOption component (included within the same file for simplicity)
 struct ProfileVisibilityOption: View {
     var title: String
     var isSelected: Bool
@@ -67,5 +81,23 @@ struct ProfileVisibilityOption: View {
                 )
         }
         .padding(.bottom, 10)
+    }
+}
+
+struct NotificationView: View {
+    let message: String
+
+    var body: some View {
+        Text(message)
+            .font(.custom("DMSans-Bold", size: 16))
+            .foregroundColor(.white)
+            .padding()
+            .background(Color.green)
+            .cornerRadius(10)
+            .shadow(radius: 10)
+            .frame(maxWidth: .infinity)
+            .padding()
+            .transition(.opacity)
+            .animation(.easeInOut)
     }
 }
