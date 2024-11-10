@@ -39,7 +39,7 @@ struct DashboardView: View {
                         }
                     }
                     .textCase(nil)
-
+                    
                     Section {
                         NavigationLink(destination: CustomPrivacyRulesView()) {
                             HStack {
@@ -77,11 +77,10 @@ struct DashboardView: View {
                             .background(Color.white)
                         }
                     }
-                    .textCase(nil)
-                    .listRowSeparator(.visible)
                 }
                 .listStyle(PlainListStyle())
-                .navigationTitle("Dashboard")
+                .accentColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
+                .navigationBarTitle("SafeSphere", displayMode: .large)
                 .background(Color.white.edgesIgnoringSafeArea(.all))
             }
             .tabItem {
@@ -109,13 +108,13 @@ struct DashboardView: View {
                 Text("Profile")
             }
         }
-        .accentColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
-        .background(Color.white.edgesIgnoringSafeArea(.all))
     }
 }
 
+// PreviewProvider for the DashboardView
 struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
         DashboardView()
+            .previewDevice("iPhone 16")
     }
 }

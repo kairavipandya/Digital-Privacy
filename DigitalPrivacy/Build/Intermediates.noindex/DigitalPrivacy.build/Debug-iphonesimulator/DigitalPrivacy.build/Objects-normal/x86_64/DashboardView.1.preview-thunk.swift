@@ -12,7 +12,7 @@ struct SocialMediaAccount {
     var imageName: String // This will reference the image in Assets
 }
 
-// Sample data for social media accounts
+// Sample accounts
 let accounts = [
     SocialMediaAccount(name: "Instagram", imageName: "instagram"),
     SocialMediaAccount(name: "Facebook", imageName: "facebook"),
@@ -25,124 +25,99 @@ struct DashboardView: View {
         TabView {
             NavigationView {
                 List {
-                    // Social media accounts section with custom logos and increased spacing
-                    Section(header: Text(__designTimeString("#1338_0", fallback: "My Accounts")).font(.custom(__designTimeString("#1338_1", fallback: "DMSans-Bold"), size: __designTimeInteger("#1338_2", fallback: 22)))) {
-                        
-                        // Add a NavigationLink for Instagram
-                        NavigationLink(destination: InstagramDetailView()) {
-                            HStack {
-                                Image(__designTimeString("#1338_3", fallback: "instagram")) // Use the custom image from Assets
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: __designTimeInteger("#1338_4", fallback: 50), height: __designTimeInteger("#1338_5", fallback: 50)) // Increased size of the logos
-                                    .clipShape(Circle()) // Clip image to a circle
-                                Text(__designTimeString("#1338_6", fallback: "Instagram"))
-                                    .font(.custom(__designTimeString("#1338_7", fallback: "DMSans-Regular"), size: __designTimeInteger("#1338_8", fallback: 18)))
-                                Spacer()
-                                // Removed the extra arrow here
+                    Section(header: Text(__designTimeString("#9840_0", fallback: "My Accounts")).font(.custom(__designTimeString("#9840_1", fallback: "DMSans-Bold"), size: __designTimeInteger("#9840_2", fallback: 22)))) {
+                        ForEach(accounts, id: \.name) { account in
+                            NavigationLink(destination: InstagramDetailView()) {
+                                HStack {
+                                    Image(account.imageName)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: __designTimeInteger("#9840_3", fallback: 50), height: __designTimeInteger("#9840_4", fallback: 50))
+                                        .clipShape(Circle())
+                                    Text(account.name)
+                                        .font(.custom(__designTimeString("#9840_5", fallback: "DMSans-Regular"), size: __designTimeInteger("#9840_6", fallback: 18)))
+                                    Spacer()
+                                }
+                                .padding(.vertical, __designTimeInteger("#9840_7", fallback: 12))
+                                .background(Color.white)
                             }
-                            .padding(.vertical, __designTimeInteger("#1338_9", fallback: 12)) // Increased vertical padding for more spacing
-                            .background(Color.white)  // Ensure row background is white
-                        }
-
-                        // For the rest of the accounts (Facebook, Snapchat, Twitter)
-                        ForEach(accounts.filter { $0.name != __designTimeString("#1338_10", fallback: "Instagram") }, id: \.name) { account in
-                            HStack {
-                                Image(account.imageName) // Use the custom image from Assets
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: __designTimeInteger("#1338_11", fallback: 50), height: __designTimeInteger("#1338_12", fallback: 50)) // Increased size of the logos
-                                    .clipShape(Circle()) // Clip image to a circle
-                                Text(account.name)
-                                    .font(.custom(__designTimeString("#1338_13", fallback: "DMSans-Regular"), size: __designTimeInteger("#1338_14", fallback: 18)))
-                                Spacer()
-                                Image(systemName: __designTimeString("#1338_15", fallback: "chevron.right"))  // Arrow indicator
-                                    .foregroundColor(.gray)
-                            }
-                            .padding(.vertical, __designTimeInteger("#1338_16", fallback: 12)) // Increased vertical padding for more spacing
-                            .background(Color.white)  // Ensure row background is white
                         }
                     }
-                    .textCase(nil)  // Preserve original text case for headers
-
-                    // Custom Privacy Rules section with arrow
+                    .textCase(nil)
+                    
                     Section {
                         NavigationLink(destination: CustomPrivacyRulesView()) {
                             HStack {
                                 VStack(alignment: .leading) {
-                                    Text(__designTimeString("#1338_17", fallback: "Custom Privacy Rules"))
-                                        .font(.custom(__designTimeString("#1338_18", fallback: "DMSans-Bold"), size: __designTimeInteger("#1338_19", fallback: 18)))
+                                    Text(__designTimeString("#9840_8", fallback: "Custom Privacy Rules"))
+                                        .font(.custom(__designTimeString("#9840_9", fallback: "DMSans-Bold"), size: __designTimeInteger("#9840_10", fallback: 18)))
                                         .foregroundColor(.black)
-                                    Text(__designTimeString("#1338_20", fallback: "Apply to Multiple Accounts"))
-                                        .font(.custom(__designTimeString("#1338_21", fallback: "DMSans-Regular"), size: __designTimeInteger("#1338_22", fallback: 16)))
+                                    Text(__designTimeString("#9840_11", fallback: "Apply to Multiple Accounts"))
+                                        .font(.custom(__designTimeString("#9840_12", fallback: "DMSans-Regular"), size: __designTimeInteger("#9840_13", fallback: 16)))
                                         .foregroundColor(.gray)
                                 }
                                 Spacer()
-                                
                             }
-                            .padding(.vertical, __designTimeInteger("#1338_23", fallback: 8)) // Ensure spacing between header and subheader
-                            .background(Color.white) // Background color for the entire block
                         }
+                        .padding(.vertical, __designTimeInteger("#9840_14", fallback: 8))
+                        .background(Color.white)
                     }
-                    .textCase(nil)  // Preserve original text case for headers
-                    .listRowSeparator(.visible)
-
-
-                    // Manage Privacy Profiles section with arrow
+                    
                     Section {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(__designTimeString("#1338_24", fallback: "Manage Privacy Profiles"))
-                                    .font(.custom(__designTimeString("#1338_25", fallback: "DMSans-Bold"), size: __designTimeInteger("#1338_26", fallback: 18)))
-                                    .foregroundColor(.black)
-                                Text(__designTimeString("#1338_27", fallback: "School vs Personal"))
-                                    .font(.custom(__designTimeString("#1338_28", fallback: "DMSans-Regular"), size: __designTimeInteger("#1338_29", fallback: 16)))
+                        NavigationLink(destination: PrivacyProfilesView()) {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(__designTimeString("#9840_15", fallback: "Manage Privacy Profiles"))
+                                        .font(.custom(__designTimeString("#9840_16", fallback: "DMSans-Bold"), size: __designTimeInteger("#9840_17", fallback: 18)))
+                                        .foregroundColor(.black)
+                                    Text(__designTimeString("#9840_18", fallback: "School vs Personal"))
+                                        .font(.custom(__designTimeString("#9840_19", fallback: "DMSans-Regular"), size: __designTimeInteger("#9840_20", fallback: 16)))
+                                        .foregroundColor(.gray)
+                                }
+                                Spacer()
+                                Image(systemName: __designTimeString("#9840_21", fallback: "chevron.right"))
                                     .foregroundColor(.gray)
                             }
-                            Spacer()
-                            Image(systemName: __designTimeString("#1338_30", fallback: "chevron.right"))  // Arrow indicating more details
-                                .foregroundColor(.gray)
+                            .padding(.vertical, __designTimeInteger("#9840_22", fallback: 8))
+                            .background(Color.white)
                         }
-                        .padding(.vertical, __designTimeInteger("#1338_31", fallback: 8)) // Ensure spacing between header and subheader
-                        .background(Color.white) // Background color for the entire block
                     }
-                    .textCase(nil)  // Preserve original text case for headers
-                    .listRowSeparator(.visible)  // Ensure separator is visible between sections
                 }
-                .listStyle(PlainListStyle())  // Use PlainListStyle for no separators between sections
-                .navigationBarTitle(__designTimeString("#1338_32", fallback: "SafeSphere"), displayMode: .large)
-                .background(Color.white.edgesIgnoringSafeArea(.all))  // White background behind the list
+                .listStyle(PlainListStyle())
+                .accentColor(Color(red: __designTimeInteger("#9840_23", fallback: 78) / __designTimeInteger("#9840_24", fallback: 255), green: __designTimeInteger("#9840_25", fallback: 60) / __designTimeInteger("#9840_26", fallback: 255), blue: __designTimeInteger("#9840_27", fallback: 219) / __designTimeInteger("#9840_28", fallback: 255)))
+                .navigationBarTitle(__designTimeString("#9840_29", fallback: "SafeSphere"), displayMode: .large)
+                .background(Color.white.edgesIgnoringSafeArea(.all))
             }
             .tabItem {
-                Image(systemName: __designTimeString("#1338_33", fallback: "house.fill"))
-                Text(__designTimeString("#1338_34", fallback: "Home"))
+                Image(systemName: __designTimeString("#9840_30", fallback: "house.fill"))
+                Text(__designTimeString("#9840_31", fallback: "Home"))
             }
-
+            
             NavigationView {
-                Text(__designTimeString("#1338_35", fallback: "Settings View"))
-                    .navigationBarTitle(__designTimeString("#1338_36", fallback: "Settings"), displayMode: .inline)
+                Text(__designTimeString("#9840_32", fallback: "Settings View"))
+                    .navigationBarTitle(__designTimeString("#9840_33", fallback: "Settings"), displayMode: .inline)
             }
             .tabItem {
-                Image(systemName: __designTimeString("#1338_37", fallback: "gear"))
-                Text(__designTimeString("#1338_38", fallback: "Settings"))
+                Image(systemName: __designTimeString("#9840_34", fallback: "gear"))
+                Text(__designTimeString("#9840_35", fallback: "Settings"))
             }
-
+            
             NavigationView {
-                Text(__designTimeString("#1338_39", fallback: "Profile View"))
-                    .navigationBarTitle(__designTimeString("#1338_40", fallback: "Profile"), displayMode: .inline)
+                Text(__designTimeString("#9840_36", fallback: "Profile View"))
+                    .navigationBarTitle(__designTimeString("#9840_37", fallback: "Profile"), displayMode: .inline)
             }
             .tabItem {
-                Image(systemName: __designTimeString("#1338_41", fallback: "person.crop.circle"))
-                Text(__designTimeString("#1338_42", fallback: "Profile"))
+                Image(systemName: __designTimeString("#9840_38", fallback: "person.crop.circle"))
+                Text(__designTimeString("#9840_39", fallback: "Profile"))
             }
         }
-        .accentColor(Color(red: __designTimeInteger("#1338_43", fallback: 78) / __designTimeInteger("#1338_44", fallback: 255), green: __designTimeInteger("#1338_45", fallback: 60) / __designTimeInteger("#1338_46", fallback: 255), blue: __designTimeInteger("#1338_47", fallback: 219) / __designTimeInteger("#1338_48", fallback: 255)))  // Set the selected tab item color to deep purple
-        .background(Color.white.edgesIgnoringSafeArea(.all))  // Set the background color of TabView to white
     }
 }
 
+// Move the PreviewProvider struct outside of the main DashboardView struct
 struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
         DashboardView()
+            .previewDevice(__designTimeString("#9840_40", fallback: "iPhone 16"))
     }
 }

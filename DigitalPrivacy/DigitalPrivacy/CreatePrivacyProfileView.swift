@@ -7,6 +7,8 @@ struct CreatePrivacyProfileView: View {
     @State private var selectedRules: Set<String> = []
     @State private var startTime = "Select"
     @State private var endTime = "Select"
+    
+    @Environment(\.presentationMode) var presentationMode  // For dismissing the view
 
     let timeOptions = [
         "12:00 AM", "1:00 AM", "2:00 AM", "3:00 AM", "4:00 AM", "5:00 AM", "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM",
@@ -16,7 +18,9 @@ struct CreatePrivacyProfileView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                Text("Create New Privacy Profile")
+                // Title Text
+                Text("Create Privacy Profile")
+
                     .font(.custom("DMSans-Bold", size: 24))
                     .padding(.top)
 
@@ -27,6 +31,8 @@ struct CreatePrivacyProfileView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.bottom)
 
+                    Text("Select Profiles")
+                        .font(.custom("DMSans-Regular", size: 16))
                     MultiSelectDropdown(options: ["Instagram", "Facebook", "Snapchat", "Twitter"], selectedOptions: $selectedProfiles)
                         .padding(.bottom)
 
@@ -67,6 +73,16 @@ struct CreatePrivacyProfileView: View {
                         endTime: endTime
                     )
                     profiles.append(newProfile)
+                    
+                    // Clear the input fields
+                    profileName = ""
+                    selectedProfiles = []
+                    selectedRules = []
+                    startTime = "Select"
+                    endTime = "Select"
+                    
+                    // Dismiss the view
+                    presentationMode.wrappedValue.dismiss()
                 }) {
                     Text("APPLY RULE")
                         .font(.custom("DMSans-Bold", size: 16))

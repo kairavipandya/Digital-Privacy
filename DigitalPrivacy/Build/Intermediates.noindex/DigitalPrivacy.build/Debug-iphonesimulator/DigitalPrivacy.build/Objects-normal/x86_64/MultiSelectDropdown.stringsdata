@@ -1,0 +1,16 @@
+{
+  "source": "/Users/arjunprabhune/Desktop/Classes/HCI/Digital-Privacy/DigitalPrivacy/DigitalPrivacy/MultiSelectDropdown.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Select Profiles",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 10
+        }
+      }
+    ]
+  },
+  "version": 1
+}
