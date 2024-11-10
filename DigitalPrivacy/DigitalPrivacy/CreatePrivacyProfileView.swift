@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CreatePrivacyProfileView: View {
     @Binding var profiles: [PrivacyProfile]
+    
     @State private var profileName = ""
     @State private var selectedProfiles: Set<String> = []
     @State private var selectedRules: Set<String> = []
@@ -20,7 +21,6 @@ struct CreatePrivacyProfileView: View {
             VStack(alignment: .leading, spacing: 20) {
                 // Title Text
                 Text("Create Privacy Profile")
-
                     .font(.custom("DMSans-Bold", size: 24))
                     .padding(.top)
 
@@ -98,6 +98,6 @@ struct CreatePrivacyProfileView: View {
             .padding()
         }
         .background(Color.white.edgesIgnoringSafeArea(.all))
-        .navigationBarBackButtonHidden(true) // Hide extra back button
+        .navigationBarTitle("Create New Privacy Profile", displayMode: .inline)
     }
 }
