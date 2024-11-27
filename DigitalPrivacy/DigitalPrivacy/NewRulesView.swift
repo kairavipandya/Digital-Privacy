@@ -3,13 +3,25 @@ import SwiftUI
 struct NewRulesView: View {
     @State private var selectedRuleType: String = "Select Rule Type"
     @State private var selectedApps: Set<String> = []
-    @State private var startTime: String = ""
-    @State private var endTime: String = ""
+    @State private var startTime: String = "Select Time"
+    @State private var endTime: String = "Select Time"
     @State private var showWarning = false
+    @State private var showConfirmation = false
 
     @Binding var privacyRules: [Rule]
 
     @Environment(\.presentationMode) var presentationMode
+
+    let timeOptions = [
+        "12:00 AM", "12:30 AM", "1:00 AM", "1:30 AM", "2:00 AM", "2:30 AM",
+        "3:00 AM", "3:30 AM", "4:00 AM", "4:30 AM", "5:00 AM", "5:30 AM",
+        "6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM",
+        "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+        "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
+        "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM",
+        "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM",
+        "9:00 PM", "9:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM"
+    ]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -52,10 +64,35 @@ struct NewRulesView: View {
                 Text("Set Time Period")
                     .font(.custom("DMSans-Bold", size: 16))
                 HStack {
-                    TextField("Start Time", text: $startTime)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                    TextField("End Time", text: $endTime)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    Menu {
+                        ForEach(timeOptions, id: \.self) { time in
+                            Button(time) { startTime = time }
+                        }
+                    } label: {
+                        HStack {
+                            Text(startTime)
+                                .foregroundColor(startTime == "Select Time" ? .gray : .black)
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                        }
+                        .padding()
+                        .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
+                    }
+
+                    Menu {
+                        ForEach(timeOptions, id: \.self) { time in
+                            Button(time) { endTime = time }
+                        }
+                    } label: {
+                        HStack {
+                            Text(endTime)
+                                .foregroundColor(endTime == "Select Time" ? .gray : .black)
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                        }
+                        .padding()
+                        .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
+                    }
                 }
             }
             .padding(.horizontal, 16)
@@ -71,10 +108,13 @@ struct NewRulesView: View {
 
             // Apply Rule Button
             Button(action: {
-                if selectedRuleType != "Select Rule Type" && !selectedApps.isEmpty && !startTime.isEmpty && !endTime.isEmpty {
+                if selectedRuleType != "Select Rule Type" && !selectedApps.isEmpty && startTime != "Select Time" && endTime != "Select Time" {
                     let newRule = Rule(name: selectedRuleType, apps: Array(selectedApps), timePeriod: "\(startTime) - \(endTime)")
                     privacyRules.append(newRule)
-                    presentationMode.wrappedValue.dismiss()
+                    showConfirmation = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 } else {
                     showWarning = true
                 }
@@ -90,39 +130,22 @@ struct NewRulesView: View {
             }
         }
         .navigationBarTitle("Create New Rule", displayMode: .inline)
-    }
-}
-
-// MultiSelectView for selecting multiple apps
-struct MultiSelectView: View {
-    let options: [String]
-    @Binding var selectedOptions: Set<String>
-
-    var body: some View {
-        VStack(alignment: .leading) {
-            ForEach(options, id: \.self) { option in
-                Button(action: {
-                    if selectedOptions.contains(option) {
-                        selectedOptions.remove(option)
-                    } else {
-                        selectedOptions.insert(option)
-                    }
-                }) {
-                    HStack {
-                        Text(option)
-                            .font(.custom("DMSans-Regular", size: 16))
-                        Spacer()
-                        if selectedOptions.contains(option) {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.blue)
-                        } else {
-                            Image(systemName: "circle")
-                                .foregroundColor(.gray)
-                        }
-                    }
+        .overlay(
+            Group {
+                if showConfirmation {
+                    Text("Rule successfully saved!")
+                        .font(.custom("DMSans-Bold", size: 16))
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.green)
+                        .cornerRadius(10)
+                        .shadow(radius: 10)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .transition(.opacity)
+                        .animation(.easeInOut)
                 }
             }
-        }
-        .padding()
+        )
     }
 }

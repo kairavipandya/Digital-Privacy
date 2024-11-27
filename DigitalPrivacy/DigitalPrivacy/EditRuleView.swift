@@ -1,5 +1,6 @@
 import SwiftUI
 
+
 struct EditRuleView: View {
     @State var rule: Rule
     @Binding var privacyRules: [Rule]

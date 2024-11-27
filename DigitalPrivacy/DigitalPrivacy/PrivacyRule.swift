@@ -22,3 +22,9 @@ struct PrivacyRule: Identifiable {
     }
 }
 
+struct Rule: Identifiable {
+    let id = UUID() // Ensures each rule has a unique identifier
+    var name: String
+    var apps: [String]
+    var timePeriod: String
+}

@@ -44,17 +44,3 @@ struct CustomPrivacyRulesView: View {
         .navigationBarTitle("Custom Privacy Rules", displayMode: .inline)
     }
 }
-
-// Model for rules
-struct Rule: Identifiable {
-    let id = UUID()
-    var name: String
-    var apps: [String]
-    var timePeriod: String
-}
-
-struct CustomPrivacyRulesView_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomPrivacyRulesView()
-    }
-}
