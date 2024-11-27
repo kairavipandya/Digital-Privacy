@@ -1,9 +1,10 @@
 import SwiftUI
 
 struct CustomPrivacyRulesView: View {
-    // State variable for the list of privacy rules
-    @State private var privacyRules = ["Content Sharing", "Activity Status", "Facial Recognition"]
-    @State private var recentlyAddedRule: String? // To track the newly added rule
+    @State private var privacyRules = [
+        Rule(name: "Location", apps: ["Facebook", "Snapchat"], timePeriod: "11:00 AM - 12:00 PM")
+    ]
+    @State private var recentlyEditedRule: Rule?
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -17,7 +18,7 @@ struct CustomPrivacyRulesView: View {
                     Text("Create a New Privacy Rule")
                         .font(.custom("DMSans-Bold", size: 18))
                     Spacer()
-                    NavigationLink(destination: NewRulesView(privacyRules: $privacyRules, recentlyAddedRule: $recentlyAddedRule)) {
+                    NavigationLink(destination: NewRulesView(privacyRules: $privacyRules)) {
                         Text("+")
                             .font(.custom("DMSans-Bold", size: 24))
                             .foregroundColor(.blue)
@@ -25,43 +26,31 @@ struct CustomPrivacyRulesView: View {
                     }
                 }
                 .padding(.vertical, 8)
-                
-                // Dynamically show the list of privacy rules
-                ForEach(privacyRules, id: \.self) { rule in
-                    HStack {
-                        Image(systemName: getIcon(for: rule))
-                            .font(.title2)
-                            .foregroundColor(.black)
-                        Text(rule)
-                            .font(.custom("DMSans-Regular", size: 18))
-                            .foregroundColor(recentlyAddedRule == rule ? .blue : .black) // Highlight new rule
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.gray)
+
+                ForEach(privacyRules, id: \.name) { rule in
+                    NavigationLink(destination: EditRuleView(rule: rule, privacyRules: $privacyRules, recentlyEditedRule: $recentlyEditedRule)) {
+                        VStack(alignment: .leading) {
+                            Text(rule.name)
+                                .font(.custom("DMSans-Bold", size: 18))
+                            Text("Apps: \(rule.apps.joined(separator: ", "))")
+                                .font(.custom("DMSans-Regular", size: 16))
+                                .foregroundColor(.gray)
+                        }
                     }
-                    .padding(.vertical, 8)
                 }
             }
             .listStyle(PlainListStyle())
         }
         .navigationBarTitle("Custom Privacy Rules", displayMode: .inline)
     }
+}
 
-    // Helper function to get icon based on rule type
-    func getIcon(for rule: String) -> String {
-        switch rule {
-        case "Content Sharing":
-            return "square.and.arrow.up"
-        case "Activity Status":
-            return "message.circle"
-        case "Facial Recognition":
-            return "faceid"
-        case "Location":
-            return "location.circle"
-        default:
-            return "questionmark.circle"
-        }
-    }
+// Model for rules
+struct Rule: Identifiable {
+    let id = UUID()
+    var name: String
+    var apps: [String]
+    var timePeriod: String
 }
 
 struct CustomPrivacyRulesView_Previews: PreviewProvider {

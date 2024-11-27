@@ -1,31 +1,27 @@
 import SwiftUI
 
 struct NewRulesView: View {
-    // State variables to store selected options
-    @State private var selectedRuleType: String = "Select"
-    @State private var selectedRule: String = "Select"
-    @State private var selectedProfile: String = "Select"
+    @State private var selectedRuleType: String = "Select Rule Type"
+    @State private var selectedApps: Set<String> = []
+    @State private var startTime: String = ""
+    @State private var endTime: String = ""
+    @State private var showWarning = false
 
-    // Binding variables
-    @Binding var privacyRules: [String]
-    @Binding var recentlyAddedRule: String?
+    @Binding var privacyRules: [Rule]
 
-    // Environment variable to dismiss the view
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            // Title
             Text("Create New Rule")
                 .font(.custom("DMSans-Bold", size: 26))
                 .padding(.top, 20)
                 .padding(.leading, 16)
 
-            // Select Rule Type Section
+            // Rule Type Section
             VStack(alignment: .leading, spacing: 5) {
                 Text("Select Rule Type")
                     .font(.custom("DMSans-Bold", size: 16))
-                    .foregroundColor(.black)
                 Menu {
                     Button("Location") { selectedRuleType = "Location" }
                     Button("Profile Visibility") { selectedRuleType = "Profile Visibility" }
@@ -33,10 +29,9 @@ struct NewRulesView: View {
                 } label: {
                     HStack {
                         Text(selectedRuleType)
-                            .foregroundColor(selectedRuleType == "Select" ? .gray : .black)
+                            .foregroundColor(selectedRuleType == "Select Rule Type" ? .gray : .black)
                         Spacer()
                         Image(systemName: "chevron.down")
-                            .foregroundColor(.gray)
                     }
                     .padding()
                     .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
@@ -44,62 +39,45 @@ struct NewRulesView: View {
             }
             .padding(.horizontal, 16)
 
-            // Set Rule Section
+            // App Selection Section
             VStack(alignment: .leading, spacing: 5) {
-                Text("Set Rule")
+                Text("Select Apps")
                     .font(.custom("DMSans-Bold", size: 16))
-                    .foregroundColor(.black)
-                Menu {
-                    Button("Allow All") { selectedRule = "Allow All" }
-                    Button("Friends Only") { selectedRule = "Friends Only" }
-                    Button("No One") { selectedRule = "No One" }
-                } label: {
-                    HStack {
-                        Text(selectedRule)
-                            .foregroundColor(selectedRule == "Select" ? .gray : .black)
-                        Spacer()
-                        Image(systemName: "chevron.down")
-                            .foregroundColor(.gray)
-                    }
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
-                }
+                MultiSelectView(options: ["Instagram", "Snapchat", "Facebook", "Twitter"], selectedOptions: $selectedApps)
             }
             .padding(.horizontal, 16)
 
-            // Select Profiles Section
+            // Time Period Section
             VStack(alignment: .leading, spacing: 5) {
-                Text("Select Profiles")
+                Text("Set Time Period")
                     .font(.custom("DMSans-Bold", size: 16))
-                    .foregroundColor(.black)
-                Menu {
-                    Button("Instagram") { selectedProfile = "Instagram" }
-                    Button("Snapchat") { selectedProfile = "Snapchat" }
-                    Button("Facebook") { selectedProfile = "Facebook" }
-                    Button("Twitter") { selectedProfile = "Twitter" }
-                } label: {
-                    HStack {
-                        Text(selectedProfile)
-                            .foregroundColor(selectedProfile == "Select" ? .gray : .black)
-                        Spacer()
-                        Image(systemName: "chevron.down")
-                            .foregroundColor(.gray)
-                    }
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
+                HStack {
+                    TextField("Start Time", text: $startTime)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextField("End Time", text: $endTime)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
             }
             .padding(.horizontal, 16)
 
             Spacer()
 
+            if showWarning {
+                Text("Please fill out all required fields.")
+                    .font(.custom("DMSans-Regular", size: 14))
+                    .foregroundColor(.red)
+                    .padding(.horizontal, 16)
+            }
+
             // Apply Rule Button
             Button(action: {
-                if !privacyRules.contains(selectedRuleType) && selectedRuleType != "Select" {
-                    privacyRules.append(selectedRuleType)
-                    recentlyAddedRule = selectedRuleType
+                if selectedRuleType != "Select Rule Type" && !selectedApps.isEmpty && !startTime.isEmpty && !endTime.isEmpty {
+                    let newRule = Rule(name: selectedRuleType, apps: Array(selectedApps), timePeriod: "\(startTime) - \(endTime)")
+                    privacyRules.append(newRule)
+                    presentationMode.wrappedValue.dismiss()
+                } else {
+                    showWarning = true
                 }
-                presentationMode.wrappedValue.dismiss()
             }) {
                 Text("APPLY RULE")
                     .font(.custom("DMSans-Bold", size: 18))
@@ -110,14 +88,41 @@ struct NewRulesView: View {
                     .cornerRadius(10)
                     .padding(.horizontal, 16)
             }
-            .padding(.bottom, 20)
         }
         .navigationBarTitle("Create New Rule", displayMode: .inline)
     }
 }
 
-struct NewRulesView_Previews: PreviewProvider {
-    static var previews: some View {
-        NewRulesView(privacyRules: .constant(["Content Sharing", "Activity Status", "Facial Recognition"]), recentlyAddedRule: .constant(nil))
+// MultiSelectView for selecting multiple apps
+struct MultiSelectView: View {
+    let options: [String]
+    @Binding var selectedOptions: Set<String>
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            ForEach(options, id: \.self) { option in
+                Button(action: {
+                    if selectedOptions.contains(option) {
+                        selectedOptions.remove(option)
+                    } else {
+                        selectedOptions.insert(option)
+                    }
+                }) {
+                    HStack {
+                        Text(option)
+                            .font(.custom("DMSans-Regular", size: 16))
+                        Spacer()
+                        if selectedOptions.contains(option) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.blue)
+                        } else {
+                            Image(systemName: "circle")
+                                .foregroundColor(.gray)
+                        }
+                    }
+                }
+            }
+        }
+        .padding()
     }
 }
