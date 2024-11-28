@@ -1,56 +1,71 @@
 import SwiftUI
-import Foundation
 
 struct PrivacyProfilesView: View {
     @State private var profiles: [PrivacyProfile] = []
-    @State private var recentlyAddedProfile: String? = nil
 
     var body: some View {
         VStack {
-            headerView()
+            HStack {
+                Text("Manage Privacy Profiles")
+                    .font(.custom("DMSans-Bold", size: 24))
+                    .padding(.top, 16)
+                Spacer()
+                NavigationLink(destination: CreatePrivacyProfileView(profiles: $profiles)) {
+                    Image(systemName: "plus")
+                        .foregroundColor(.black)
+                }
+                .padding(.top, 16)
+            }
+            .padding(.horizontal)
 
             List {
                 ForEach(profiles) { profile in
-                    profileRow(for: profile)
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack {
+                            Text(profile.name)
+                                .font(.custom("DMSans-Bold", size: 18))
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.gray)
+                        }
+                        
+                        Text("Profiles:")
+                            .font(.custom("DMSans-Regular", size: 16))
+                            .foregroundColor(.gray)
+                        Text(profile.profiles.joined(separator: ", "))
+                            .font(.custom("DMSans-Regular", size: 16))
+                            .padding(.leading, 16)
+                        
+                        Text("Rules:")
+                            .font(.custom("DMSans-Regular", size: 16))
+                            .foregroundColor(.gray)
+                        Text(profile.rules.joined(separator: ", "))
+                            .font(.custom("DMSans-Regular", size: 16))
+                            .padding(.leading, 16)
+                        
+                        HStack {
+                            Text("Activation Time:")
+                                .font(.custom("DMSans-Regular", size: 16))
+                                .foregroundColor(.gray)
+                            Spacer()
+                            Text("\(profile.startTime) - \(profile.endTime)")
+                                .font(.custom("DMSans-Regular", size: 16))
+                                .foregroundColor(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
+                        }
+                    }
+                    .padding(.vertical, 8)
                 }
             }
-        }
-        .background(Color.white.edgesIgnoringSafeArea(.all))
-    }
-
-    // Extracted Header View
-    @ViewBuilder
-    private func headerView() -> some View {
-        HStack {
-            Text("Manage Privacy Profiles")
-                .font(.custom("DMSans-Bold", size: 24))
-                .padding(.top, 16)
-            Spacer()
-            NavigationLink(destination: CreatePrivacyProfileView(profiles: $profiles)) {
-                Image(systemName: "plus")
-                    .foregroundColor(.black)
-            }
-            .padding(.top, 16)
+            .listStyle(PlainListStyle())
+            .background(Color.white)
         }
         .padding(.horizontal)
+        .background(Color.white.edgesIgnoringSafeArea(.all))
     }
+}
 
-    @ViewBuilder
-    private func profileRow(for profile: PrivacyProfile) -> some View {
-        if let index = profiles.firstIndex(where: { $0.id == profile.id }) {
-            NavigationLink(destination: EditPrivacyProfileView(profile: $profiles[index], profiles: $profiles)) {
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text(profile.name)
-                            .font(.custom("DMSans-Bold", size: 18))
-                            .foregroundColor(recentlyAddedProfile == profile.name ? .purple : .black)
-                        Spacer()
-                    }
-                    Text("Apps: \(profile.profiles.joined(separator: ", "))")
-                        .foregroundColor(.gray)
-                        .font(.custom("DMSans-Regular", size: 14))
-                }
-            }
-        }
+struct PrivacyProfilesView_Previews: PreviewProvider {
+    static var previews: some View {
+        PrivacyProfilesView()
     }
 }
