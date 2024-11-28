@@ -8,7 +8,7 @@
 import Foundation
 
 struct PrivacyRule: Identifiable {
-    var id: UUID = UUID() // Generates a unique identifier for each rule
+    var id: UUID = UUID()
     var ruleType: String
     var selectedApps: [String]
     var startTime: String
@@ -23,8 +23,9 @@ struct PrivacyRule: Identifiable {
 }
 
 struct Rule: Identifiable {
-    let id = UUID() // Ensures each rule has a unique identifier
+    let id = UUID()
     var name: String
     var apps: [String]
     var timePeriod: String
 }
+

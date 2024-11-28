@@ -1,14 +1,16 @@
 import SwiftUI
+import Foundation
 
 struct CreatePrivacyProfileView: View {
     @Binding var profiles: [PrivacyProfile]
-    
     @State private var profileName = ""
     @State private var selectedProfiles: Set<String> = []
     @State private var selectedRules: Set<String> = []
     @State private var startTime: String? = nil
     @State private var endTime: String? = nil
-    
+    @State private var showWarning = false
+    @State private var showConfirmation = false
+
     @Environment(\.presentationMode) var presentationMode // For dismissing the view
 
     let timeOptions = [
@@ -19,7 +21,6 @@ struct CreatePrivacyProfileView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Title
                 Text("Create Privacy Profile")
                     .font(.custom("DMSans-Bold", size: 26))
                     .padding(.top)
@@ -31,10 +32,7 @@ struct CreatePrivacyProfileView: View {
                         .foregroundColor(.black)
                     TextField("Profile Name", text: $profileName)
                         .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                        )
+                        .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5)))
                 }
 
                 // Select Profiles Dropdown
@@ -42,35 +40,7 @@ struct CreatePrivacyProfileView: View {
                     Text("Select Profiles")
                         .font(.custom("DMSans-Bold", size: 16))
                         .foregroundColor(.black)
-                    Menu {
-                        ForEach(["Instagram", "Facebook", "Snapchat", "Twitter"], id: \.self) { profile in
-                            Button(action: {
-                                if selectedProfiles.contains(profile) {
-                                    selectedProfiles.remove(profile)
-                                } else {
-                                    selectedProfiles.insert(profile)
-                                }
-                            }) {
-                                Text(profile)
-                                if selectedProfiles.contains(profile) {
-                                    Image(systemName: "checkmark")
-                                }
-                            }
-                        }
-                    } label: {
-                        HStack {
-                            Text(selectedProfiles.isEmpty ? "Select Profiles" : selectedProfiles.joined(separator: ", "))
-                                .foregroundColor(selectedProfiles.isEmpty ? .gray : .black)
-                            Spacer()
-                            Image(systemName: "chevron.down")
-                                .foregroundColor(.gray)
-                        }
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                        )
-                    }
+                    MultiSelectDropdown(options: ["Instagram", "Facebook", "Snapchat", "Twitter"], selectedOptions: $selectedProfiles)
                 }
 
                 // Add Rules Dropdown
@@ -78,35 +48,7 @@ struct CreatePrivacyProfileView: View {
                     Text("Add Rules")
                         .font(.custom("DMSans-Bold", size: 16))
                         .foregroundColor(.black)
-                    Menu {
-                        ForEach(["Online Status", "Restrict Messaging", "Post Notifications", "Facial Recognition"], id: \.self) { rule in
-                            Button(action: {
-                                if selectedRules.contains(rule) {
-                                    selectedRules.remove(rule)
-                                } else {
-                                    selectedRules.insert(rule)
-                                }
-                            }) {
-                                Text(rule)
-                                if selectedRules.contains(rule) {
-                                    Image(systemName: "checkmark")
-                                }
-                            }
-                        }
-                    } label: {
-                        HStack {
-                            Text(selectedRules.isEmpty ? "Select Rules" : selectedRules.joined(separator: ", "))
-                                .foregroundColor(selectedRules.isEmpty ? .gray : .black)
-                            Spacer()
-                            Image(systemName: "chevron.down")
-                                .foregroundColor(.gray)
-                        }
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                        )
-                    }
+                    MultiSelectDropdown(options: ["Online Status", "Restrict Messaging", "Post Notifications", "Facial Recognition"], selectedOptions: $selectedRules)
                 }
 
                 // Set Activation Time
@@ -115,7 +57,6 @@ struct CreatePrivacyProfileView: View {
                         .font(.custom("DMSans-Bold", size: 16))
                         .foregroundColor(.black)
                     HStack(spacing: 20) {
-                        // Start Time Dropdown
                         Menu {
                             ForEach(timeOptions, id: \.self) { time in
                                 Button(action: { startTime = time }) {
@@ -131,13 +72,9 @@ struct CreatePrivacyProfileView: View {
                                     .foregroundColor(.gray)
                             }
                             .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                            )
+                            .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5)))
                         }
 
-                        // End Time Dropdown
                         Menu {
                             ForEach(timeOptions, id: \.self) { time in
                                 Button(action: { endTime = time }) {
@@ -153,34 +90,35 @@ struct CreatePrivacyProfileView: View {
                                     .foregroundColor(.gray)
                             }
                             .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                            )
+                            .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5)))
                         }
                     }
                 }
 
-                // Apply Rule Button
+                if showWarning {
+                    Text("Please fill out all required fields.")
+                        .foregroundColor(.red)
+                        .font(.custom("DMSans-Regular", size: 14))
+                }
+
                 Button(action: {
-                    let newProfile = PrivacyProfile(
-                        name: profileName,
-                        profiles: selectedProfiles,
-                        rules: selectedRules,
-                        startTime: startTime ?? "Select",
-                        endTime: endTime ?? "Select"
-                    )
-                    profiles.append(newProfile)
-                    
-                    // Reset Fields
-                    profileName = ""
-                    selectedProfiles = []
-                    selectedRules = []
-                    startTime = nil
-                    endTime = nil
-                    
-                    // Dismiss the View
-                    presentationMode.wrappedValue.dismiss()
+                    if profileName.isEmpty || selectedProfiles.isEmpty || selectedRules.isEmpty || startTime == nil || endTime == nil {
+                        showWarning = true
+                    } else {
+                        let newProfile = PrivacyProfile(
+                            name: profileName,
+                            profiles: selectedProfiles,
+                            rules: selectedRules,
+                            startTime: startTime ?? "",
+                            endTime: endTime ?? ""
+                        )
+                        profiles.append(newProfile)
+                        showConfirmation = true
+
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    }
                 }) {
                     Text("APPLY RULE")
                         .font(.custom("DMSans-Bold", size: 16))
@@ -195,6 +133,20 @@ struct CreatePrivacyProfileView: View {
             }
             .padding(.horizontal)
         }
+        .overlay(
+            Group {
+                if showConfirmation {
+                    Text("Privacy Profile Saved!")
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.green)
+                        .cornerRadius(10)
+                        .shadow(radius: 10)
+                        .transition(.opacity)
+                        .animation(.easeInOut)
+                }
+            }
+        )
         .background(Color.white.edgesIgnoringSafeArea(.all))
         .navigationBarTitle("Create Privacy Profile", displayMode: .inline)
     }
