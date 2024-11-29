@@ -9,6 +9,7 @@ struct NewRulesView: View {
     @State private var showConfirmation = false
 
     @Binding var privacyRules: [Rule]
+    @Binding var recentlyAddedRule: String?
 
     @Environment(\.presentationMode) var presentationMode
 
@@ -24,128 +25,138 @@ struct NewRulesView: View {
     ]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("Create New Rule")
-                .font(.custom("DMSans-Bold", size: 26))
-                .padding(.top, 20)
-                .padding(.leading, 16)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                // Header
+                Text("Create New Rule")
+                    .font(.custom("DMSans-Bold", size: 26))
+                    .padding(.top, 20)
+                    .padding(.leading, 16)
 
-            // Rule Type Section
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Select Rule Type")
-                    .font(.custom("DMSans-Bold", size: 16))
-                Menu {
-                    Button("Location") { selectedRuleType = "Location" }
-                    Button("Profile Visibility") { selectedRuleType = "Profile Visibility" }
-                    Button("Comment Permissions") { selectedRuleType = "Comment Permissions" }
-                } label: {
-                    HStack {
-                        Text(selectedRuleType)
-                            .foregroundColor(selectedRuleType == "Select Rule Type" ? .gray : .black)
-                        Spacer()
-                        Image(systemName: "chevron.down")
-                    }
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
-                }
-            }
-            .padding(.horizontal, 16)
+                // Rule Type Section
+                sectionHeader("Select Rule Type")
+                dropdownMenu(selectedOption: $selectedRuleType, options: ["Location", "Profile Visibility", "Comment Permissions"])
 
-            // App Selection Section
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Select Apps")
-                    .font(.custom("DMSans-Bold", size: 16))
+                // App Selection Section
+                sectionHeader("Select Apps")
                 MultiSelectView(options: ["Instagram", "Snapchat", "Facebook", "Twitter"], selectedOptions: $selectedApps)
-            }
-            .padding(.horizontal, 16)
-
-            // Time Period Section
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Set Time Period")
-                    .font(.custom("DMSans-Bold", size: 16))
-                HStack {
-                    Menu {
-                        ForEach(timeOptions, id: \.self) { time in
-                            Button(time) { startTime = time }
-                        }
-                    } label: {
-                        HStack {
-                            Text(startTime)
-                                .foregroundColor(startTime == "Select Time" ? .gray : .black)
-                            Spacer()
-                            Image(systemName: "chevron.down")
-                        }
-                        .padding()
-                        .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
-                    }
-
-                    Menu {
-                        ForEach(timeOptions, id: \.self) { time in
-                            Button(time) { endTime = time }
-                        }
-                    } label: {
-                        HStack {
-                            Text(endTime)
-                                .foregroundColor(endTime == "Select Time" ? .gray : .black)
-                            Spacer()
-                            Image(systemName: "chevron.down")
-                        }
-                        .padding()
-                        .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
-                    }
-                }
-            }
-            .padding(.horizontal, 16)
-
-            Spacer()
-
-            if showWarning {
-                Text("Please fill out all required fields.")
-                    .font(.custom("DMSans-Regular", size: 14))
-                    .foregroundColor(.red)
                     .padding(.horizontal, 16)
-            }
 
-            // Apply Rule Button
-            Button(action: {
-                if selectedRuleType != "Select Rule Type" && !selectedApps.isEmpty && startTime != "Select Time" && endTime != "Select Time" {
-                    let newRule = Rule(name: selectedRuleType, apps: Array(selectedApps), timePeriod: "\(startTime) - \(endTime)")
-                    privacyRules.append(newRule)
-                    showConfirmation = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                } else {
-                    showWarning = true
+                // Time Period Section
+                sectionHeader("Set Time Period")
+                timeSelectionMenu()
+
+                Spacer()
+
+                // Warning Text
+                if showWarning {
+                    Text("Please fill out all required fields.")
+                        .font(.custom("DMSans-Regular", size: 14))
+                        .foregroundColor(.red)
+                        .padding(.horizontal, 16)
                 }
-            }) {
-                Text("APPLY RULE")
-                    .font(.custom("DMSans-Bold", size: 18))
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
-                    .cornerRadius(10)
-                    .padding(.horizontal, 16)
+
+                // Apply Rule Button
+                Button(action: applyRule) {
+                    Text("APPLY RULE")
+                        .font(.custom("DMSans-Bold", size: 18))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
+                        .cornerRadius(10)
+                        .padding(.horizontal, 16)
+                }
             }
         }
         .navigationBarTitle("Create New Rule", displayMode: .inline)
-        .overlay(
-            Group {
-                if showConfirmation {
-                    Text("Rule successfully saved!")
-                        .font(.custom("DMSans-Bold", size: 16))
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.green)
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .transition(.opacity)
-                        .animation(.easeInOut)
-                }
+        .overlay(confirmationOverlay)
+    }
+
+    // MARK: - Components
+    @ViewBuilder
+    private func sectionHeader(_ text: String) -> some View {
+        Text(text)
+            .font(.custom("DMSans-Bold", size: 16))
+            .padding(.horizontal, 16)
+            .foregroundColor(.black)
+    }
+
+    @ViewBuilder
+    private func dropdownMenu(selectedOption: Binding<String>, options: [String]) -> some View {
+        Menu {
+            ForEach(options, id: \.self) { option in
+                Button(option) { selectedOption.wrappedValue = option }
             }
-        )
+        } label: {
+            HStack {
+                Text(selectedOption.wrappedValue)
+                    .foregroundColor(selectedOption.wrappedValue == "Select Rule Type" ? .gray : .black)
+                Spacer()
+                Image(systemName: "chevron.down")
+            }
+            .padding()
+            .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
+            .padding(.horizontal, 16)
+        }
+    }
+
+    @ViewBuilder
+    private func timeSelectionMenu() -> some View {
+        HStack {
+            timeDropdown(selectedOption: $startTime)
+            timeDropdown(selectedOption: $endTime)
+        }
+        .padding(.horizontal, 16)
+    }
+
+    @ViewBuilder
+    private func timeDropdown(selectedOption: Binding<String>) -> some View {
+        Menu {
+            ForEach(timeOptions, id: \.self) { time in
+                Button(time) { selectedOption.wrappedValue = time }
+            }
+        } label: {
+            HStack {
+                Text(selectedOption.wrappedValue)
+                    .foregroundColor(selectedOption.wrappedValue == "Select Time" ? .gray : .black)
+                Spacer()
+                Image(systemName: "chevron.down")
+            }
+            .padding()
+            .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
+        }
+    }
+
+    @ViewBuilder
+    private var confirmationOverlay: some View {
+        if showConfirmation {
+            Text("Rule successfully saved!")
+                .font(.custom("DMSans-Bold", size: 16))
+                .foregroundColor(.white)
+                .padding()
+                .background(Color.green)
+                .cornerRadius(10)
+                .shadow(radius: 10)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .transition(.opacity)
+                .animation(.easeInOut)
+        }
+    }
+
+    // MARK: - Actions
+    private func applyRule() {
+        if selectedRuleType != "Select Rule Type" && !selectedApps.isEmpty && startTime != "Select Time" && endTime != "Select Time" {
+            let newRule = Rule(name: selectedRuleType, apps: selectedApps, timePeriod: "\(startTime) - \(endTime)")
+            privacyRules.append(newRule)
+            recentlyAddedRule = selectedRuleType // Set the most recently added rule
+            showConfirmation = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                presentationMode.wrappedValue.dismiss()
+            }
+        } else {
+            showWarning = true
+        }
     }
 }

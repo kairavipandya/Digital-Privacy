@@ -7,9 +7,6 @@ struct MultiSelectDropdown: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Select Profiles")
-                .font(.custom("DMSans-Regular", size: 16))
-            
             Button(action: {
                 withAnimation {
                     expanded.toggle()

@@ -1,5 +1,4 @@
 import SwiftUI
-import Foundation
 
 struct PrivacyProfilesView: View {
     @State private var profiles: [PrivacyProfile] = []
@@ -7,49 +6,53 @@ struct PrivacyProfilesView: View {
 
     var body: some View {
         VStack {
-            headerView()
+            headerView
 
             List {
                 ForEach(profiles) { profile in
                     profileRow(for: profile)
                 }
             }
+            .listStyle(PlainListStyle())
         }
         .background(Color.white.edgesIgnoringSafeArea(.all))
+        .navigationBarTitleDisplayMode(.inline)
     }
 
-    // Extracted Header View
-    @ViewBuilder
-    private func headerView() -> some View {
+    // MARK: - Components
+    private var headerView: some View {
         HStack {
             Text("Manage Privacy Profiles")
                 .font(.custom("DMSans-Bold", size: 24))
-                .padding(.top, 16)
             Spacer()
             NavigationLink(destination: CreatePrivacyProfileView(profiles: $profiles)) {
                 Image(systemName: "plus")
+                    .font(.title2)
                     .foregroundColor(.black)
             }
-            .padding(.top, 16)
         }
-        .padding(.horizontal)
+        .padding()
     }
 
     @ViewBuilder
     private func profileRow(for profile: PrivacyProfile) -> some View {
         if let index = profiles.firstIndex(where: { $0.id == profile.id }) {
             NavigationLink(destination: EditPrivacyProfileView(profile: $profiles[index], profiles: $profiles)) {
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text(profile.name)
-                            .font(.custom("DMSans-Bold", size: 18))
-                            .foregroundColor(recentlyAddedProfile == profile.name ? .purple : .black)
-                        Spacer()
-                    }
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(profile.name)
+                        .font(.custom("DMSans-Bold", size: 18))
+                        .foregroundColor(recentlyAddedProfile == profile.name ? .purple : .black)
                     Text("Apps: \(profile.profiles.joined(separator: ", "))")
-                        .foregroundColor(.gray)
                         .font(.custom("DMSans-Regular", size: 14))
+                        .foregroundColor(.gray)
+                    Text("Rules: \(profile.rules.joined(separator: ", "))")
+                        .font(.custom("DMSans-Regular", size: 14))
+                        .foregroundColor(.gray)
+                    Text("Activation Time: \(profile.startTime) - \(profile.endTime)")
+                        .font(.custom("DMSans-Regular", size: 14))
+                        .foregroundColor(.gray)
                 }
+                .padding(.vertical, 10)
             }
         }
     }

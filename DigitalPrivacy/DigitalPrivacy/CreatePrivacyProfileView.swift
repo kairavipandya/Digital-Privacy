@@ -1,5 +1,4 @@
 import SwiftUI
-import Foundation
 
 struct CreatePrivacyProfileView: View {
     @Binding var profiles: [PrivacyProfile]
@@ -26,73 +25,21 @@ struct CreatePrivacyProfileView: View {
                     .padding(.top)
 
                 // Profile Name Input
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Enter Profile Name")
-                        .font(.custom("DMSans-Bold", size: 16))
-                        .foregroundColor(.black)
-                    TextField("Profile Name", text: $profileName)
-                        .padding()
-                        .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5)))
-                }
+                inputField(title: "Profile Name", placeholder: "Enter Profile Name", text: $profileName)
 
                 // Select Profiles Dropdown
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Select Profiles")
-                        .font(.custom("DMSans-Bold", size: 16))
-                        .foregroundColor(.black)
+                dropdownSection(title: "Select Profiles") {
                     MultiSelectDropdown(options: ["Instagram", "Facebook", "Snapchat", "Twitter"], selectedOptions: $selectedProfiles)
                 }
 
                 // Add Rules Dropdown
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Add Rules")
-                        .font(.custom("DMSans-Bold", size: 16))
-                        .foregroundColor(.black)
+                dropdownSection(title: "Select Rules") {
                     MultiSelectDropdown(options: ["Online Status", "Restrict Messaging", "Post Notifications", "Facial Recognition"], selectedOptions: $selectedRules)
                 }
 
                 // Set Activation Time
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Set Activation Time")
-                        .font(.custom("DMSans-Bold", size: 16))
-                        .foregroundColor(.black)
-                    HStack(spacing: 20) {
-                        Menu {
-                            ForEach(timeOptions, id: \.self) { time in
-                                Button(action: { startTime = time }) {
-                                    Text(time)
-                                }
-                            }
-                        } label: {
-                            HStack {
-                                Text(startTime ?? "Select Time")
-                                    .foregroundColor(startTime == nil ? .gray : .black)
-                                Spacer()
-                                Image(systemName: "chevron.down")
-                                    .foregroundColor(.gray)
-                            }
-                            .padding()
-                            .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5)))
-                        }
-
-                        Menu {
-                            ForEach(timeOptions, id: \.self) { time in
-                                Button(action: { endTime = time }) {
-                                    Text(time)
-                                }
-                            }
-                        } label: {
-                            HStack {
-                                Text(endTime ?? "Select Time")
-                                    .foregroundColor(endTime == nil ? .gray : .black)
-                                Spacer()
-                                Image(systemName: "chevron.down")
-                                    .foregroundColor(.gray)
-                            }
-                            .padding()
-                            .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5)))
-                        }
-                    }
+                dropdownSection(title: "Set Activation Time") {
+                    timeSelectionMenu()
                 }
 
                 if showWarning {
@@ -101,53 +48,117 @@ struct CreatePrivacyProfileView: View {
                         .font(.custom("DMSans-Regular", size: 14))
                 }
 
-                Button(action: {
-                    if profileName.isEmpty || selectedProfiles.isEmpty || selectedRules.isEmpty || startTime == nil || endTime == nil {
-                        showWarning = true
-                    } else {
-                        let newProfile = PrivacyProfile(
-                            name: profileName,
-                            profiles: selectedProfiles,
-                            rules: selectedRules,
-                            startTime: startTime ?? "",
-                            endTime: endTime ?? ""
-                        )
-                        profiles.append(newProfile)
-                        showConfirmation = true
-
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            presentationMode.wrappedValue.dismiss()
-                        }
-                    }
-                }) {
-                    Text("APPLY RULE")
-                        .font(.custom("DMSans-Bold", size: 16))
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
-                        .cornerRadius(10)
-                }
-                .padding(.horizontal)
-                .padding(.bottom, 20)
+                applyButton
             }
             .padding(.horizontal)
         }
         .overlay(
             Group {
                 if showConfirmation {
-                    Text("Privacy Profile Saved!")
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.green)
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
-                        .transition(.opacity)
-                        .animation(.easeInOut)
+                    confirmationOverlay
                 }
             }
         )
         .background(Color.white.edgesIgnoringSafeArea(.all))
         .navigationBarTitle("Create Privacy Profile", displayMode: .inline)
+    }
+
+    // MARK: - Components
+    @ViewBuilder
+    private func inputField(title: String, placeholder: String, text: Binding<String>) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(title)
+                .font(.custom("DMSans-Bold", size: 16))
+                .foregroundColor(.black)
+            TextField(placeholder, text: text)
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5)))
+        }
+    }
+
+    @ViewBuilder
+    private func dropdownSection<T: View>(title: String, @ViewBuilder content: () -> T) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(title)
+                .font(.custom("DMSans-Bold", size: 16))
+                .foregroundColor(.black)
+            content()
+        }
+    }
+
+    @ViewBuilder
+    private func timeSelectionMenu() -> some View {
+        HStack(spacing: 20) {
+            timeDropdown(selectedOption: $startTime)
+            timeDropdown(selectedOption: $endTime)
+        }
+    }
+
+    @ViewBuilder
+    private func timeDropdown(selectedOption: Binding<String?>) -> some View {
+        Menu {
+            ForEach(timeOptions, id: \.self) { time in
+                Button(action: { selectedOption.wrappedValue = time }) {
+                    Text(time)
+                }
+            }
+        } label: {
+            HStack {
+                Text(selectedOption.wrappedValue ?? "Select Time")
+                    .foregroundColor(selectedOption.wrappedValue == nil ? .gray : .black)
+                Spacer()
+                Image(systemName: "chevron.down")
+                    .foregroundColor(.gray)
+            }
+            .padding()
+            .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5)))
+        }
+    }
+
+    @ViewBuilder
+    private var applyButton: some View {
+        Button(action: saveProfile) {
+            Text("APPLY RULE")
+                .font(.custom("DMSans-Bold", size: 16))
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
+                .cornerRadius(10)
+        }
+        .padding(.bottom, 20)
+    }
+
+    @ViewBuilder
+    private var confirmationOverlay: some View {
+        Text("Privacy Profile Saved!")
+            .foregroundColor(.white)
+            .padding()
+            .background(Color.green)
+            .cornerRadius(10)
+            .shadow(radius: 10)
+            .transition(.opacity)
+            .animation(.easeInOut)
+    }
+
+    // MARK: - Actions
+    private func saveProfile() {
+        if profileName.isEmpty || selectedProfiles.isEmpty || selectedRules.isEmpty || startTime == nil || endTime == nil {
+            showWarning = true
+        } else {
+            let newProfile = PrivacyProfile(
+                name: profileName,
+                profiles: selectedProfiles,
+                rules: selectedRules,
+                startTime: startTime ?? "",
+                endTime: endTime ?? ""
+            )
+            profiles.append(newProfile)
+            showConfirmation = true
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                presentationMode.wrappedValue.dismiss()
+            }
+        }
     }
 }

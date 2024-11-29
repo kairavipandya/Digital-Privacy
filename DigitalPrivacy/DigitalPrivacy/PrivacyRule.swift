@@ -25,7 +25,7 @@ struct PrivacyRule: Identifiable {
 struct Rule: Identifiable {
     let id = UUID()
     var name: String
-    var apps: [String]
+    var apps: Set<String> // Changed to Set<String>
     var timePeriod: String
 }
 
