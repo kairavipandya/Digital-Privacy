@@ -134,7 +134,7 @@ struct CreatePrivacyProfileView: View {
         Text("Privacy Profile Saved!")
             .foregroundColor(.white)
             .padding()
-            .background(Color.green)
+            .background(Color(red: 78 / 255, green: 60 / 255, blue: 219 / 255))
             .cornerRadius(10)
             .shadow(radius: 10)
             .transition(.opacity)

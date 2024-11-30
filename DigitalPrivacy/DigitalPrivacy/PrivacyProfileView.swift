@@ -12,6 +12,8 @@ struct PrivacyProfilesView: View {
             headerView // Includes both Edit and Create buttons
 
             List {
+                createProfileButton // New button to create a privacy profile
+
                 ForEach(profiles) { profile in
                     profileRow(for: profile)
                         .overlay(
@@ -50,15 +52,29 @@ struct PrivacyProfilesView: View {
                     .font(.custom("DMSans-Bold", size: 16))
                     .foregroundColor(.blue)
             }
-            // Create Profile Button
-            NavigationLink(destination: CreatePrivacyProfileView(profiles: $profiles)) {
-                Image(systemName: "plus")
-                    .font(.title2)
-                    .foregroundColor(.black)
+        }
+        .padding()
+    }
+
+    // MARK: - Create Profile Button
+    @ViewBuilder
+    private var createProfileButton: some View {
+        HStack {
+            Text("Create a New Privacy Profile")
+                .font(.custom("DMSans-Bold", size: 18))
+            Spacer()
+            NavigationLink(
+                destination: CreatePrivacyProfileView(profiles: $profiles)
+            ) {
+                Text("+")
+                    .font(.custom("DMSans-Bold", size: 24))
+                    .foregroundColor(.blue)
+                    .padding(.trailing, 10)
             }
         }
         .padding()
     }
+
 
     // MARK: - Profile Row
     @ViewBuilder

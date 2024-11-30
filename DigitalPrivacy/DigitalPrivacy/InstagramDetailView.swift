@@ -10,19 +10,28 @@ struct InstagramDetailView: View {
                 NavigationLink(destination: ProfileVisibilityView(profileVisibility: $profileVisibility)) {
                     SettingItem(icon: "eye", title: "Profile Visibility (\(profileVisibility))")
                 }
-                SettingItem(icon: "figure.walk", title: "Activity Status")
-                SettingItem(icon: "location", title: "Location Services")
-                SettingItem(icon: "nosign", title: "Blocked Accounts")
-                SettingItem(icon: "arrow.triangle.2.circlepath", title: "Data Sharing")
+                NavigationLink(destination: DummyView(title: "Blocked Accounts", content: "You currently have no blocked accounts.")) {
+                    SettingItem(icon: "nosign", title: "Blocked Accounts")
+                }
+                NavigationLink(destination: DummyView(title: "Data Sharing", content: "Data sharing settings can be configured here.")) {
+                    SettingItem(icon: "arrow.triangle.2.circlepath", title: "Data Sharing")
+                }
             }
 
             Section(header: Text("Additional Settings")
                         .font(.custom("DMSans-Bold", size: 18))) {
-                SettingItem(icon: "magnifyingglass", title: "Search History")
-                SettingItem(icon: "link", title: "Connected Apps")
-                SettingItem(icon: "lock.shield", title: "Privacy Policy")
-                SettingItem(icon: "doc.plaintext", title: "Terms of Service")
-                SettingItem(icon: "questionmark.circle", title: "Help Center")
+                NavigationLink(destination: DummyView(title: "Search History", content: "Your recent searches will appear here.")) {
+                    SettingItem(icon: "magnifyingglass", title: "Search History")
+                }
+                NavigationLink(destination: DummyView(title: "Privacy Policy", content: "This is a placeholder for the Privacy Policy details.")) {
+                    SettingItem(icon: "lock.shield", title: "Privacy Policy")
+                }
+                NavigationLink(destination: DummyView(title: "Terms of Service", content: "This is a placeholder for the Terms of Service.")) {
+                    SettingItem(icon: "doc.plaintext", title: "Terms of Service")
+                }
+                NavigationLink(destination: DummyView(title: "Help Center", content: "Welcome to the Help Center. How can we assist you?")) {
+                    SettingItem(icon: "questionmark.circle", title: "Help Center")
+                }
             }
         }
         .listStyle(PlainListStyle())
@@ -46,5 +55,26 @@ struct SettingItem: View {
         }
         .padding(.vertical, 8)
         .background(Color.white)
+    }
+}
+
+// Dummy View for displaying placeholder content
+struct DummyView: View {
+    let title: String
+    let content: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            Text(title)
+                .font(.custom("DMSans-Bold", size: 24))
+                .padding(.top)
+            Text(content)
+                .font(.custom("DMSans-Regular", size: 16))
+                .foregroundColor(.gray)
+            Spacer()
+        }
+        .padding()
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
