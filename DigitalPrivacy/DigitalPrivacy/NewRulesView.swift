@@ -7,12 +7,12 @@ struct NewRulesView: View {
     @State private var endTime: String = "Select Time"
     @State private var showWarning = false
     @State private var showConfirmation = false
-
+    
     @Binding var privacyRules: [Rule]
     @Binding var recentlyAddedRule: String?
-
+    
     @Environment(\.presentationMode) var presentationMode
-
+    
     let timeOptions = [
         "12:00 AM", "12:30 AM", "1:00 AM", "1:30 AM", "2:00 AM", "2:30 AM",
         "3:00 AM", "3:30 AM", "4:00 AM", "4:30 AM", "5:00 AM", "5:30 AM",
@@ -23,7 +23,7 @@ struct NewRulesView: View {
         "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM",
         "9:00 PM", "9:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM"
     ]
-
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -32,22 +32,22 @@ struct NewRulesView: View {
                     .font(.custom("DMSans-Bold", size: 26))
                     .padding(.top, 20)
                     .padding(.leading, 16)
-
+                
                 // Rule Type Section
                 sectionHeader("Select Rule Type")
                 dropdownMenu(selectedOption: $selectedRuleType, options: ["Location", "Profile Visibility", "Comment Permissions"])
-
+                
                 // App Selection Section
                 sectionHeader("Select Apps")
                 MultiSelectView(options: ["Instagram", "Snapchat", "Facebook", "Twitter"], selectedOptions: $selectedApps)
                     .padding(.horizontal, 16)
-
+                
                 // Time Period Section
                 sectionHeader("Set Time Period")
                 timeSelectionMenu()
-
+                
                 Spacer()
-
+                
                 // Warning Text
                 if showWarning {
                     Text("Please fill out all required fields.")
@@ -55,7 +55,7 @@ struct NewRulesView: View {
                         .foregroundColor(.red)
                         .padding(.horizontal, 16)
                 }
-
+                
                 // Apply Rule Button
                 Button(action: applyRule) {
                     Text("APPLY RULE")
@@ -69,10 +69,10 @@ struct NewRulesView: View {
                 }
             }
         }
-        .navigationBarTitle("Create New Rule", displayMode: .inline)
+        .navigationBarTitle("", displayMode: .inline)
         .overlay(confirmationOverlay)
     }
-
+    
     // MARK: - Components
     @ViewBuilder
     private func sectionHeader(_ text: String) -> some View {
@@ -81,7 +81,7 @@ struct NewRulesView: View {
             .padding(.horizontal, 16)
             .foregroundColor(.black)
     }
-
+    
     @ViewBuilder
     private func dropdownMenu(selectedOption: Binding<String>, options: [String]) -> some View {
         Menu {
@@ -100,7 +100,7 @@ struct NewRulesView: View {
             .padding(.horizontal, 16)
         }
     }
-
+    
     @ViewBuilder
     private func timeSelectionMenu() -> some View {
         HStack {
@@ -109,7 +109,7 @@ struct NewRulesView: View {
         }
         .padding(.horizontal, 16)
     }
-
+    
     @ViewBuilder
     private func timeDropdown(selectedOption: Binding<String>) -> some View {
         Menu {
@@ -127,7 +127,7 @@ struct NewRulesView: View {
             .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
         }
     }
-
+    
     @ViewBuilder
     private var confirmationOverlay: some View {
         if showConfirmation {
@@ -144,11 +144,17 @@ struct NewRulesView: View {
                 .animation(.easeInOut)
         }
     }
-
+    
     // MARK: - Actions
     private func applyRule() {
         if selectedRuleType != "Select Rule Type" && !selectedApps.isEmpty && startTime != "Select Time" && endTime != "Select Time" {
-            let newRule = Rule(name: selectedRuleType, apps: selectedApps, timePeriod: "\(startTime) - \(endTime)")
+            let icon = iconForRuleType(selectedRuleType)
+            let newRule = Rule(
+                name: selectedRuleType,
+                apps: selectedApps, // `selectedApps` is already a Set<String>
+                timePeriod: "\(startTime) - \(endTime)",
+                icon: icon // Assign the icon
+            )
             privacyRules.append(newRule)
             recentlyAddedRule = selectedRuleType // Set the most recently added rule
             showConfirmation = true
@@ -159,4 +165,19 @@ struct NewRulesView: View {
             showWarning = true
         }
     }
+    
+    // Helper function to determine the icon based on the rule type
+    private func iconForRuleType(_ ruleType: String) -> String {
+        switch ruleType {
+        case "Location":
+            return "location.circle"
+        case "Profile Visibility":
+            return "eye"
+        case "Comment Permissions":
+            return "bubble.left.and.bubble.right"
+        default:
+            return "questionmark.circle"
+        }
+    }
+    
 }

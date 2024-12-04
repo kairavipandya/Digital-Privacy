@@ -27,5 +27,6 @@ struct Rule: Identifiable {
     var name: String
     var apps: Set<String> // Changed to Set<String>
     var timePeriod: String
+    var icon: String
 }
 

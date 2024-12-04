@@ -1,7 +1,15 @@
 import SwiftUI
 
 struct PrivacyProfilesView: View {
-    @State private var profiles: [PrivacyProfile] = []
+    @State private var profiles: [PrivacyProfile] = [
+        PrivacyProfile(
+            name: "Example Profile",
+            profiles: ["Instagram", "Facebook"],
+            rules: ["Online Status", "Restrict Messaging"],
+            startTime: "8:00 AM",
+            endTime: "5:00 PM"
+        )
+    ] // Added a default profile
     @State private var recentlyAddedProfile: String? = nil
     @State private var isEditing: Bool = false // Toggle for edit mode
     @State private var showDeleteConfirmation: Bool = false // Show confirmation dialog
@@ -42,16 +50,23 @@ struct PrivacyProfilesView: View {
 
     // MARK: - Header View
     private var headerView: some View {
-        HStack {
-            Text("Manage Privacy Profiles")
-                .font(.custom("DMSans-Bold", size: 24))
-            Spacer()
-            // Edit Button
-            Button(action: { isEditing.toggle() }) {
-                Text(isEditing ? "Done" : "Edit")
-                    .font(.custom("DMSans-Bold", size: 16))
-                    .foregroundColor(.blue)
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Manage Privacy Profiles")
+                    .font(.custom("DMSans-Bold", size: 24))
+                Spacer()
+                // Edit Button
+                Button(action: { isEditing.toggle() }) {
+                    Text(isEditing ? "Done" : "Edit")
+                        .font(.custom("DMSans-Bold", size: 16))
+                        .foregroundColor(.blue)
+                }
             }
+            // Description
+            Text("Privacy Profile: Tailored restrictions for your daily needs.")
+                .font(.custom("DMSans-Regular", size: 16))
+                .foregroundColor(.gray)
+                .padding(.top, 4)
         }
         .padding()
     }
@@ -74,7 +89,6 @@ struct PrivacyProfilesView: View {
         }
         .padding()
     }
-
 
     // MARK: - Profile Row
     @ViewBuilder

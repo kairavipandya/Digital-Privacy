@@ -27,14 +27,14 @@ struct CreatePrivacyProfileView: View {
                 // Profile Name Input
                 inputField(title: "Profile Name", placeholder: "Enter Profile Name", text: $profileName)
 
-                // Select Profiles Dropdown
+                // Multi-Select for Profiles
                 dropdownSection(title: "Select Profiles") {
-                    MultiSelectDropdown(options: ["Instagram", "Facebook", "Snapchat", "Twitter"], selectedOptions: $selectedProfiles)
+                    MultiSelectView(options: ["Instagram", "Facebook", "Snapchat", "Twitter"], selectedOptions: $selectedProfiles)
                 }
 
-                // Add Rules Dropdown
+                // Multi-Select for Rules
                 dropdownSection(title: "Select Rules") {
-                    MultiSelectDropdown(options: ["Online Status", "Restrict Messaging", "Post Notifications", "Facial Recognition"], selectedOptions: $selectedRules)
+                    MultiSelectView(options: ["Online Status", "Restrict Messaging", "Post Notifications", "Facial Recognition"], selectedOptions: $selectedRules)
                 }
 
                 // Set Activation Time
@@ -60,7 +60,7 @@ struct CreatePrivacyProfileView: View {
             }
         )
         .background(Color.white.edgesIgnoringSafeArea(.all))
-        .navigationBarTitle("Create Privacy Profile", displayMode: .inline)
+        .navigationBarTitle("", displayMode: .inline)
     }
 
     // MARK: - Components
