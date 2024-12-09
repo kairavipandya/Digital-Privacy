@@ -4,50 +4,90 @@
     "Localizable": [
       {
         "comment": "",
-        "key": "Custom Privacy Rules",
+        "key": "",
         "location": {
           "startingColumn": 29,
-          "startingLine": 66
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Are you sure you want to delete this rule?",
+        "location": {
+          "startingColumn": 13,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "Privacy Rule: Unified privacy settings for all your accounts.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 31
         }
       },
       {
         "comment": "",
         "key": "Custom Privacy Rules",
         "location": {
-          "startingColumn": 18,
-          "startingLine": 7
+          "startingColumn": 26,
+          "startingLine": 18
         }
       },
       {
         "comment": "",
-        "key": "Privacy Rules",
+        "key": "Done",
         "location": {
-          "startingColumn": 26,
-          "startingLine": 16
+          "startingColumn": 42,
+          "startingLine": 23
         }
       },
       {
         "comment": "",
-        "key": "Content Sharing",
+        "key": "Edit",
         "location": {
-          "startingColumn": 26,
-          "startingLine": 30
+          "startingColumn": 51,
+          "startingLine": 23
         }
       },
       {
         "comment": "",
-        "key": "Activity Status",
+        "key": "Create a New Privacy Rule",
         "location": {
           "startingColumn": 26,
-          "startingLine": 43
+          "startingLine": 42
         }
       },
       {
         "comment": "",
-        "key": "Facial Recognition",
+        "key": "+",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "Delete",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Apps: %@",
         "location": {
           "startingColumn": 26,
-          "startingLine": 56
+          "startingLine": 110
         }
       }
     ]

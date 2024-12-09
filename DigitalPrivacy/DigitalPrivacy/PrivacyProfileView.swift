@@ -8,9 +8,16 @@ struct PrivacyProfilesView: View {
             rules: ["Online Status", "Restrict Messaging"],
             startTime: "8:00 AM",
             endTime: "5:00 PM"
+        ),
+        PrivacyProfile(
+            name: "School",
+            profiles: ["Instagram"],
+            rules: ["Restrict Messaging"],
+            startTime: "7:00 AM",
+            endTime: "3:00 PM"
         )
-    ] // Added a default profile
-    @State private var recentlyAddedProfile: String? = nil
+    ] // Added multiple default profiles
+    @State private var searchText: String = "" // State for search text
     @State private var isEditing: Bool = false // Toggle for edit mode
     @State private var showDeleteConfirmation: Bool = false // Show confirmation dialog
     @State private var profileToDelete: PrivacyProfile? // Track the profile to delete
@@ -19,10 +26,14 @@ struct PrivacyProfilesView: View {
         VStack {
             headerView // Includes both Edit and Create buttons
 
-            List {
-                createProfileButton // New button to create a privacy profile
+            // MARK: - Search Bar
+            searchBar // Search bar to filter privacy profiles
 
-                ForEach(profiles) { profile in
+            List {
+                createProfileButton // Button to create a privacy profile
+
+                // Filtered list based on search text
+                ForEach(filteredProfiles) { profile in
                     profileRow(for: profile)
                         .overlay(
                             isEditing ? deleteButton(for: profile) : nil,
@@ -71,6 +82,34 @@ struct PrivacyProfilesView: View {
         .padding()
     }
 
+    // MARK: - Search Bar
+    private var searchBar: some View {
+        HStack {
+            TextField("Search Privacy Profiles", text: $searchText)
+                .padding(10)
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
+                .padding(.horizontal)
+
+            if !searchText.isEmpty {
+                Button(action: { searchText = "" }) {
+                    Text("Cancel")
+                        .foregroundColor(.blue)
+                        .padding(.trailing, 10)
+                }
+            }
+        }
+    }
+
+    // MARK: - Filtered Profiles
+    private var filteredProfiles: [PrivacyProfile] {
+        if searchText.isEmpty {
+            return profiles
+        } else {
+            return profiles.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        }
+    }
+
     // MARK: - Create Profile Button
     @ViewBuilder
     private var createProfileButton: some View {
@@ -98,7 +137,6 @@ struct PrivacyProfilesView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     Text(profile.name)
                         .font(.custom("DMSans-Bold", size: 18))
-                        .foregroundColor(recentlyAddedProfile == profile.name ? .purple : .black)
                     Text("Apps: \(profile.profiles.joined(separator: ", "))")
                         .font(.custom("DMSans-Regular", size: 14))
                         .foregroundColor(.gray)

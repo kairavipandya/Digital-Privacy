@@ -4,98 +4,114 @@
     "Localizable": [
       {
         "comment": "",
+        "key": "Are you sure you want to delete this profile?",
+        "location": {
+          "startingColumn": 13,
+          "startingLine": 49
+        }
+      },
+      {
+        "comment": "",
+        "key": "Delete",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "Privacy Profile: Tailored restrictions for your daily needs.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
         "key": "Manage Privacy Profiles",
         "location": {
           "startingColumn": 22,
-          "startingLine": 19
+          "startingLine": 66
         }
       },
       {
         "comment": "",
-        "key": "Online Status",
+        "key": "Done",
         "location": {
-          "startingColumn": 28,
-          "startingLine": 48
+          "startingColumn": 38,
+          "startingLine": 71
         }
       },
       {
         "comment": "",
-        "key": "Restrict Messaging",
+        "key": "Edit",
         "location": {
-          "startingColumn": 28,
-          "startingLine": 52
+          "startingColumn": 47,
+          "startingLine": 71
         }
       },
       {
         "comment": "",
-        "key": "Post Notifications",
+        "key": "Search Privacy Profiles",
         "location": {
-          "startingColumn": 28,
-          "startingLine": 56
+          "startingColumn": 23,
+          "startingLine": 88
         }
       },
       {
         "comment": "",
-        "key": "Configure privacy settings for personal time",
+        "key": "Cancel",
         "location": {
-          "startingColumn": 30,
-          "startingLine": 42
+          "startingColumn": 26,
+          "startingLine": 96
         }
       },
       {
         "comment": "",
-        "key": "Personal Profile",
+        "key": "Create a New Privacy Profile",
         "location": {
-          "startingColumn": 34,
-          "startingLine": 36
+          "startingColumn": 18,
+          "startingLine": 117
         }
       },
       {
         "comment": "",
-        "key": "Activation Time",
+        "key": "+",
         "location": {
-          "startingColumn": 30,
-          "startingLine": 61
+          "startingColumn": 22,
+          "startingLine": 123
         }
       },
       {
         "comment": "",
-        "key": "3:00 PM - 8:00 AM",
+        "key": "Apps: %@",
         "location": {
-          "startingColumn": 30,
-          "startingLine": 65
+          "startingColumn": 26,
+          "startingLine": 140
         }
       },
       {
         "comment": "",
-        "key": "Profiles:",
+        "key": "Rules: %@",
         "location": {
-          "startingColumn": 30,
-          "startingLine": 83
+          "startingColumn": 26,
+          "startingLine": 143
         }
       },
       {
         "comment": "",
-        "key": "Rules:",
+        "key": "Activation Time: %@ - %@",
         "location": {
-          "startingColumn": 30,
-          "startingLine": 90
-        }
-      },
-      {
-        "comment": "",
-        "key": "Activation Time:",
-        "location": {
-          "startingColumn": 34,
-          "startingLine": 98
-        }
-      },
-      {
-        "comment": "",
-        "key": "%@ - %@",
-        "location": {
-          "startingColumn": 34,
-          "startingLine": 102
+          "startingColumn": 26,
+          "startingLine": 146
         }
       }
     ]

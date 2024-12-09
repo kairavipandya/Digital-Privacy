@@ -1,0 +1,72 @@
+{
+  "source": "/Users/arjunprabhune/Desktop/Classes/HCI/Digital-Privacy/DigitalPrivacy/DigitalPrivacy/EditPrivacyProfileView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Edit Privacy Profile",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "Edit Privacy Profile",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "All fields are required!",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "SAVE CHANGES",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "Changes Saved!",
+        "location": {
+          "startingColumn": 14,
+          "startingLine": 148
+        }
+      },
+      {
+        "comment": "",
+        "key": "Enter %@",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "Start Time",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 109
+        }
+      },
+      {
+        "comment": "",
+        "key": "End Time",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 115
+        }
+      }
+    ]
+  },
+  "version": 1
+}

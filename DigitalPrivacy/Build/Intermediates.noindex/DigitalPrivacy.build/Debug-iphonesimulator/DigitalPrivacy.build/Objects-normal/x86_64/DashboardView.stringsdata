@@ -6,104 +6,88 @@
         "comment": "",
         "key": "SafeSphere",
         "location": {
-          "startingColumn": 78,
-          "startingLine": 88
+          "startingColumn": 37,
+          "startingLine": 84
         }
       },
       {
         "comment": "",
         "key": "My Accounts",
         "location": {
-          "startingColumn": 82,
-          "startingLine": 28
+          "startingColumn": 42,
+          "startingLine": 24
         }
       },
       {
         "comment": "",
         "key": "Custom Privacy Rules",
         "location": {
-          "startingColumn": 82,
-          "startingLine": 52
+          "startingColumn": 42,
+          "startingLine": 49
         }
       },
       {
         "comment": "",
         "key": "Apply to Multiple Accounts",
         "location": {
-          "startingColumn": 83,
-          "startingLine": 55
+          "startingColumn": 42,
+          "startingLine": 52
         }
       },
       {
         "comment": "",
         "key": "Manage Privacy Profiles",
         "location": {
-          "startingColumn": 83,
-          "startingLine": 70
+          "startingColumn": 42,
+          "startingLine": 68
         }
       },
       {
         "comment": "",
         "key": "School vs Personal",
         "location": {
-          "startingColumn": 83,
-          "startingLine": 73
+          "startingColumn": 42,
+          "startingLine": 71
         }
       },
       {
         "comment": "",
         "key": "Home",
         "location": {
-          "startingColumn": 63,
-          "startingLine": 93
-        }
-      },
-      {
-        "comment": "",
-        "key": "Settings View",
-        "location": {
-          "startingColumn": 63,
-          "startingLine": 97
+          "startingColumn": 22,
+          "startingLine": 89
         }
       },
       {
         "comment": "",
         "key": "Settings",
         "location": {
-          "startingColumn": 82,
-          "startingLine": 98
+          "startingColumn": 41,
+          "startingLine": 95
         }
       },
       {
         "comment": "",
         "key": "Settings",
         "location": {
-          "startingColumn": 63,
-          "startingLine": 102
-        }
-      },
-      {
-        "comment": "",
-        "key": "Profile View",
-        "location": {
-          "startingColumn": 63,
-          "startingLine": 106
+          "startingColumn": 22,
+          "startingLine": 99
         }
       },
       {
         "comment": "",
         "key": "Profile",
         "location": {
-          "startingColumn": 82,
-          "startingLine": 107
+          "startingColumn": 41,
+          "startingLine": 105
         }
       },
       {
         "comment": "",
         "key": "Profile",
         "location": {
-          "startingColumn": 63,
-          "startingLine": 111
+          "startingColumn": 22,
+          "startingLine": 109
         }
       }
     ]

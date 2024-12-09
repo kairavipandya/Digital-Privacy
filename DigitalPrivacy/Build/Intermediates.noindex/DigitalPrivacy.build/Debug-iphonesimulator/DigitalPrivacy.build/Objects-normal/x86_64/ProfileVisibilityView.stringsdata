@@ -7,7 +7,15 @@
         "key": "Profile Visibility",
         "location": {
           "startingColumn": 29,
-          "startingLine": 47
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "Confirm Changes",
+        "location": {
+          "startingColumn": 13,
+          "startingLine": 94
         }
       },
       {
@@ -15,15 +23,39 @@
         "key": "Profile Visibility",
         "location": {
           "startingColumn": 22,
-          "startingLine": 9
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "UNDO",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 57
         }
       },
       {
         "comment": "",
         "key": "SAVE CHANGES",
         "location": {
-          "startingColumn": 22,
-          "startingLine": 35
+          "startingColumn": 26,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "Save Changes",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 101
         }
       }
     ]

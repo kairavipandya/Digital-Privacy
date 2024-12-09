@@ -4,26 +4,26 @@
     "Localizable": [
       {
         "comment": "",
-        "key": "Instagram Settings",
+        "key": "Social Media Account Settings",
         "location": {
-          "startingColumn": 30,
-          "startingLine": 30
+          "startingColumn": 26,
+          "startingLine": 38
         }
       },
       {
         "comment": "",
-        "key": "Instagram Account",
+        "key": "Account",
         "location": {
-          "startingColumn": 38,
-          "startingLine": 7
+          "startingColumn": 34,
+          "startingLine": 8
         }
       },
       {
         "comment": "",
         "key": "Additional Settings",
         "location": {
-          "startingColumn": 38,
-          "startingLine": 20
+          "startingColumn": 34,
+          "startingLine": 21
         }
       }
     ]

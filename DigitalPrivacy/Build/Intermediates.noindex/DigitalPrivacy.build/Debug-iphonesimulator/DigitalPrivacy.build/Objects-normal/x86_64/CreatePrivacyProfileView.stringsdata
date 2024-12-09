@@ -4,10 +4,10 @@
     "Localizable": [
       {
         "comment": "",
-        "key": "Create New Privacy Profile",
+        "key": "",
         "location": {
           "startingColumn": 29,
-          "startingLine": 101
+          "startingLine": 63
         }
       },
       {
@@ -20,74 +20,26 @@
       },
       {
         "comment": "",
-        "key": "Enter Profile Name",
+        "key": "Please fill out all required fields.",
         "location": {
           "startingColumn": 26,
-          "startingLine": 28
-        }
-      },
-      {
-        "comment": "",
-        "key": "Select Profiles",
-        "location": {
-          "startingColumn": 26,
-          "startingLine": 34
-        }
-      },
-      {
-        "comment": "",
-        "key": "Add Rules",
-        "location": {
-          "startingColumn": 26,
-          "startingLine": 39
-        }
-      },
-      {
-        "comment": "",
-        "key": "Set Activation Start Time",
-        "location": {
-          "startingColumn": 26,
-          "startingLine": 44
-        }
-      },
-      {
-        "comment": "",
-        "key": "Set Activation End Time",
-        "location": {
-          "startingColumn": 26,
-          "startingLine": 54
-        }
-      },
-      {
-        "comment": "",
-        "key": "Profile Name",
-        "location": {
-          "startingColumn": 31,
-          "startingLine": 30
-        }
-      },
-      {
-        "comment": "",
-        "key": "Select",
-        "location": {
-          "startingColumn": 28,
           "startingLine": 46
         }
       },
       {
         "comment": "",
-        "key": "Select",
+        "key": "Privacy Profile Saved!",
         "location": {
-          "startingColumn": 28,
-          "startingLine": 56
+          "startingColumn": 14,
+          "startingLine": 134
         }
       },
       {
         "comment": "",
         "key": "APPLY RULE",
         "location": {
-          "startingColumn": 26,
-          "startingLine": 87
+          "startingColumn": 18,
+          "startingLine": 121
         }
       }
     ]
