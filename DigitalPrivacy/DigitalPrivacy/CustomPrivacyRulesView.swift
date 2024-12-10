@@ -9,6 +9,7 @@ struct CustomPrivacyRulesView: View {
     @State private var isEditing: Bool = false // Toggle for edit mode
     @State private var showDeleteConfirmation: Bool = false // Show confirmation dialog
     @State private var ruleToDelete: Rule? // Track the rule to delete
+    @State private var searchText: String = "" // Text for the search bar
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -36,6 +37,18 @@ struct CustomPrivacyRulesView: View {
             .padding(.top, 20)
             .padding(.leading, 16)
 
+            // Search Bar
+            VStack {
+                TextField("Search Privacy Rules", text: $searchText)
+                    .padding(10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.gray.opacity(0.5))
+                    )
+                    .padding(.horizontal, 16)
+            }
+            .padding(.top, 10)
+
             // List of rules
             List {
                 HStack {
@@ -56,10 +69,10 @@ struct CustomPrivacyRulesView: View {
                 }
                 .padding(.vertical, 8)
 
-                ForEach(privacyRules.indices, id: \.self) { index in
-                    ruleRow(for: privacyRules[index])
+                ForEach(filteredRules.indices, id: \.self) { index in
+                    ruleRow(for: filteredRules[index])
                         .overlay(
-                            isEditing ? deleteButton(for: privacyRules[index]) : nil,
+                            isEditing ? deleteButton(for: filteredRules[index]) : nil,
                             alignment: .trailing
                         )
                 }
@@ -78,6 +91,15 @@ struct CustomPrivacyRulesView: View {
                 }
             }
             Button("Cancel", role: .cancel) {}
+        }
+    }
+
+    // MARK: - Filtered Rules
+    private var filteredRules: [Rule] {
+        if searchText.isEmpty {
+            return privacyRules
+        } else {
+            return privacyRules.filter { $0.name.lowercased().contains(searchText.lowercased()) }
         }
     }
 
